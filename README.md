@@ -1,4 +1,5 @@
 # 🎬 VideoVault
+
 > Premium Video Editor Marketplace - Connecting clients with professional video editors
 
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)](https://nextjs.org/)
@@ -10,7 +11,7 @@
 
 VideoVault is a dark-themed, UI-focused marketplace that connects clients with professional video editors. Built for the modern creator economy, it offers seamless project management, secure payments, and a premium user experience.
 
-**Live Demo:** [videovault.app](https://videovault.app) *(Coming Soon)*
+**Live Demo:** [videovault.app](https://videovault.app) _(Coming Soon)_
 
 ---
 
@@ -32,6 +33,7 @@ VideoVault is a dark-themed, UI-focused marketplace that connects clients with p
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js 18+
 - MongoDB 6.x
 - Git
@@ -47,7 +49,7 @@ cd videovault
 cd frontend
 npm install
 
-# Install backend dependencies  
+# Install backend dependencies
 cd ../backend
 npm install
 
@@ -64,7 +66,7 @@ cd backend
 npm run dev
 
 # Terminal 2: Start Frontend (Port 3000)
-cd frontend  
+cd frontend
 npm run dev
 ```
 
@@ -125,6 +127,7 @@ videovault/
 ## 🎨 Tech Stack
 
 ### Frontend
+
 - **Framework:** Next.js 14 (App Router)
 - **Styling:** Tailwind CSS + shadcn/ui
 - **State Management:** Zustand
@@ -132,7 +135,8 @@ videovault/
 - **HTTP Client:** Axios
 - **Icons:** Lucide React
 
-### Backend  
+### Backend
+
 - **Runtime:** Node.js + Express.js
 - **Database:** MongoDB + Mongoose
 - **Authentication:** JWT + bcryptjs
@@ -141,6 +145,7 @@ videovault/
 - **Payment:** Razorpay/Stripe
 
 ### Development Tools
+
 - **Language:** TypeScript
 - **Linting:** ESLint + Prettier
 - **Testing:** Jest + React Testing Library
@@ -151,26 +156,30 @@ videovault/
 ## 🌟 Key Features
 
 ### 👤 User Management
+
 - **Dual Roles:** Client and Editor accounts
 - **JWT Authentication:** Secure token-based auth
 - **Profile System:** Detailed profiles with portfolios
 - **Rating System:** 5-star reviews and feedback
 
-### 📋 Project Management  
+### 📋 Project Management
+
 - **Project Posting:** Detailed project requirements
 - **Advanced Search:** Filter by budget, skills, timeline
 - **File Sharing:** Reference materials and deliverables
 - **Status Tracking:** Real-time project updates
 
 ### 💰 Bidding & Payments
+
 - **Proposal System:** Editors submit detailed bids
 - **Secure Payments:** Escrow-based transactions
 - **Commission Model:** 15% platform fee
 - **Multiple Payment:** Fixed price and hourly rates
 
 ### 🎯 User Experience
+
 - **Dark Theme:** Modern, eye-friendly interface
-- **Responsive Design:** Mobile-first approach  
+- **Responsive Design:** Mobile-first approach
 - **Real-time Updates:** Live notifications
 - **Fast Performance:** Optimized for speed
 
@@ -179,6 +188,7 @@ videovault/
 ## 🔐 Environment Variables
 
 ### Frontend (.env.local)
+
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:5000
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
@@ -186,10 +196,10 @@ NEXT_PUBLIC_RAZORPAY_KEY=your_razorpay_key
 ```
 
 ### Backend (.env)
+
 ```env
 # Database
 MONGODB_URI=mongodb://localhost:27017/videovault
-MONGODB_URI_PROD=mongodb+srv://user:pass@cluster.mongodb.net/videovault
 
 # Authentication
 JWT_SECRET=your_super_secret_jwt_key
@@ -220,6 +230,7 @@ PORT=5000
 ## 📊 Database Schema
 
 ### User Model
+
 ```javascript
 {
   email: String,
@@ -241,6 +252,7 @@ PORT=5000
 ```
 
 ### Project Model
+
 ```javascript
 {
   title: String,
@@ -262,6 +274,7 @@ PORT=5000
 ## 🚀 Deployment
 
 ### Frontend (Vercel)
+
 ```bash
 # Build and deploy
 npm run build
@@ -269,6 +282,7 @@ vercel --prod
 ```
 
 ### Backend (Railway/Render)
+
 ```bash
 # Environment: NODE_ENV=production
 # Build Command: npm install
@@ -276,6 +290,7 @@ vercel --prod
 ```
 
 ### Database (MongoDB Atlas)
+
 - Create cluster on [MongoDB Atlas](https://cloud.mongodb.com/)
 - Whitelist IP addresses
 - Update connection string in environment variables
@@ -289,7 +304,7 @@ vercel --prod
 cd frontend
 npm test
 
-# Run backend tests  
+# Run backend tests
 cd backend
 npm test
 
@@ -302,6 +317,7 @@ npm run test:all
 ## 📈 Development Roadmap
 
 ### Phase 1: MVP (Weeks 1-8) ✅
+
 - [x] Authentication system
 - [x] User profiles (client/editor)
 - [x] Project posting and browsing
@@ -309,6 +325,7 @@ npm run test:all
 - [x] Dark theme UI
 
 ### Phase 2: Core Features (Weeks 9-12)
+
 - [ ] Payment integration (Razorpay)
 - [ ] File upload and sharing
 - [ ] Review and rating system
@@ -316,6 +333,7 @@ npm run test:all
 - [ ] Real-time notifications
 
 ### Phase 3: Advanced Features (Month 4+)
+
 - [ ] Video conferencing integration
 - [ ] AI-powered matching
 - [ ] Mobile app (React Native)
@@ -333,6 +351,7 @@ npm run test:all
 5. **Open** a Pull Request
 
 ### Coding Standards
+
 - Use TypeScript for type safety
 - Follow ESLint + Prettier configuration
 - Write meaningful commit messages
@@ -353,7 +372,7 @@ npm run test:all
 ## 🙏 Acknowledgments
 
 - **shadcn/ui** for beautiful components
-- **Tailwind CSS** for utility-first styling  
+- **Tailwind CSS** for utility-first styling
 - **Next.js** team for amazing developer experience
 - **MongoDB** for flexible database solutions
 - **Vercel** for seamless deployment
