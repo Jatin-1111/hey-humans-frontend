@@ -5,7 +5,7 @@
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)](https://nextjs.org/)
 [![Express.js](https://img.shields.io/badge/Express.js-4.x-green?logo=express)](https://expressjs.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-6.x-green?logo=mongodb)](https://mongodb.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)](https://typescriptlang.org/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-5.x-blue?logo=JavaScript)](https://JavaScriptlang.org/)
 
 ## 🎯 Overview
 
@@ -146,7 +146,7 @@ videovault/
 
 ### Development Tools
 
-- **Language:** TypeScript
+- **Language:** JavaScript
 - **Linting:** ESLint + Prettier
 - **Testing:** Jest + React Testing Library
 - **Version Control:** Git + GitHub
@@ -352,7 +352,7 @@ npm run test:all
 
 ### Coding Standards
 
-- Use TypeScript for type safety
+- Use JavaScript for type safety
 - Follow ESLint + Prettier configuration
 - Write meaningful commit messages
 - Add tests for new features
