@@ -38,7 +38,7 @@ const Tabs = ({
                         onMouseEnter={() => setHovering(true)}
                         onMouseLeave={() => setHovering(false)}
                         className={cn(
-                            "relative px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 mx-2",
+                            "relative px-8 py-4 rounded-full text-lg font-geist font-semibold transition-all duration-300 mx-2",
                             tabClassName
                         )}
                         style={{ transformStyle: "preserve-3d" }}
@@ -106,31 +106,31 @@ const VideoEditingContent = () => (
     <div className="bg-gradient-to-br from-gray-900 to-black rounded-3xl p-8 text-white">
         <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-                <h3 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                <h3 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent font-space tracking-tight">
                     Video Editing Services
                 </h3>
-                <p className="text-gray-300 text-lg mb-6">
+                <p className="text-gray-300 text-lg mb-6 font-inter leading-relaxed">
                     Connect with professional video editors, motion graphics artists, and creative specialists
                 </p>
                 <div className="space-y-4">
                     <div className="flex items-center gap-3">
                         <Star className="text-yellow-400" size={20} />
-                        <span>4.9★ Average Rating</span>
+                        <span className="font-inter font-medium">4.9★ Average Rating</span>
                     </div>
                     <div className="flex items-center gap-3">
                         <Users className="text-blue-400" size={20} />
-                        <span>1000+ Professional Editors</span>
+                        <span className="font-inter font-medium">1000+ Professional Editors</span>
                     </div>
                     <div className="flex items-center gap-3">
                         <Clock className="text-green-400" size={20} />
-                        <span>24-48 Hour Turnaround</span>
+                        <span className="font-inter font-medium">24-48 Hour Turnaround</span>
                     </div>
                 </div>
                 <div className="flex gap-4 mt-8">
-                    <button className="bg-white text-black px-6 py-3 rounded-full font-semibold hover:scale-105 transition-transform">
+                    <button className="bg-white text-black px-6 py-3 rounded-full font-geist font-semibold hover:scale-105 transition-transform">
                         Find Editors
                     </button>
-                    <button className="border border-white/30 px-6 py-3 rounded-full hover:bg-white/10 transition-colors">
+                    <button className="border border-white/30 px-6 py-3 rounded-full hover:bg-white/10 transition-colors font-geist font-medium">
                         View Portfolio
                     </button>
                 </div>
@@ -138,23 +138,23 @@ const VideoEditingContent = () => (
             <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                     <Play className="mx-auto mb-2 text-blue-400" size={24} />
-                    <h4 className="font-semibold">Video Editing</h4>
-                    <p className="text-sm text-gray-400">Professional cuts & transitions</p>
+                    <h4 className="font-outfit font-semibold">Video Editing</h4>
+                    <p className="text-sm text-gray-400 font-inter">Professional cuts & transitions</p>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                     <Zap className="mx-auto mb-2 text-purple-400" size={24} />
-                    <h4 className="font-semibold">Motion Graphics</h4>
-                    <p className="text-sm text-gray-400">Animations & visual effects</p>
+                    <h4 className="font-outfit font-semibold">Motion Graphics</h4>
+                    <p className="text-sm text-gray-400 font-inter">Animations & visual effects</p>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                     <Shield className="mx-auto mb-2 text-green-400" size={24} />
-                    <h4 className="font-semibold">Color Grading</h4>
-                    <p className="text-sm text-gray-400">Professional color correction</p>
+                    <h4 className="font-outfit font-semibold">Color Grading</h4>
+                    <p className="text-sm text-gray-400 font-inter">Professional color correction</p>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                     <Award className="mx-auto mb-2 text-yellow-400" size={24} />
-                    <h4 className="font-semibold">Audio Post</h4>
-                    <p className="text-sm text-gray-400">Sound design & mixing</p>
+                    <h4 className="font-outfit font-semibold">Audio Post</h4>
+                    <p className="text-sm text-gray-400 font-inter">Sound design & mixing</p>
                 </div>
             </div>
         </div>
@@ -165,31 +165,31 @@ const SellingContent = () => (
     <div className="bg-gradient-to-br from-green-900 to-black rounded-3xl p-8 text-white">
         <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-                <h3 className="text-4xl font-bold mb-4 bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+                <h3 className="text-4xl font-bold mb-4 bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent font-space tracking-tight">
                     LED Display Sales
                 </h3>
-                <p className="text-gray-300 text-lg mb-6">
+                <p className="text-gray-300 text-lg mb-6 font-inter leading-relaxed">
                     Purchase premium LED screens and video walls for permanent installations
                 </p>
                 <div className="space-y-4">
                     <div className="flex items-center gap-3">
                         <Shield className="text-green-400" size={20} />
-                        <span>2-Year Warranty</span>
+                        <span className="font-inter font-medium">2-Year Warranty</span>
                     </div>
                     <div className="flex items-center gap-3">
                         <Zap className="text-blue-400" size={20} />
-                        <span>P2.5 - P10 Pixel Range</span>
+                        <span className="font-inter font-medium">P2.5 - P10 Pixel Range</span>
                     </div>
                     <div className="flex items-center gap-3">
                         <Users className="text-purple-400" size={20} />
-                        <span>Installation Support</span>
+                        <span className="font-inter font-medium">Installation Support</span>
                     </div>
                 </div>
                 <div className="flex gap-4 mt-8">
-                    <button className="bg-white text-black px-6 py-3 rounded-full font-semibold hover:scale-105 transition-transform">
+                    <button className="bg-white text-black px-6 py-3 rounded-full font-geist font-semibold hover:scale-105 transition-transform">
                         Shop Displays
                     </button>
-                    <button className="border border-white/30 px-6 py-3 rounded-full hover:bg-white/10 transition-colors">
+                    <button className="border border-white/30 px-6 py-3 rounded-full hover:bg-white/10 transition-colors font-geist font-medium">
                         Get Quote
                     </button>
                 </div>
@@ -197,31 +197,31 @@ const SellingContent = () => (
             <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                     <div className="w-12 h-12 bg-green-400/20 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                        <span className="text-green-400 font-bold">P2.5</span>
+                        <span className="text-green-400 font-bold font-geist">P2.5</span>
                     </div>
-                    <h4 className="font-semibold">Indoor HD</h4>
-                    <p className="text-sm text-gray-400">Premium indoor displays</p>
+                    <h4 className="font-outfit font-semibold">Indoor HD</h4>
+                    <p className="text-sm text-gray-400 font-inter">Premium indoor displays</p>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                     <div className="w-12 h-12 bg-blue-400/20 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                        <span className="text-blue-400 font-bold">P4</span>
+                        <span className="text-blue-400 font-bold font-geist">P4</span>
                     </div>
-                    <h4 className="font-semibold">Outdoor</h4>
-                    <p className="text-sm text-gray-400">Weather-resistant screens</p>
+                    <h4 className="font-outfit font-semibold">Outdoor</h4>
+                    <p className="text-sm text-gray-400 font-inter">Weather-resistant screens</p>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                     <div className="w-12 h-12 bg-purple-400/20 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                        <span className="text-purple-400 font-bold">P6</span>
+                        <span className="text-purple-400 font-bold font-geist">P6</span>
                     </div>
-                    <h4 className="font-semibold">Events</h4>
-                    <p className="text-sm text-gray-400">Large format displays</p>
+                    <h4 className="font-outfit font-semibold">Events</h4>
+                    <p className="text-sm text-gray-400 font-inter">Large format displays</p>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                     <div className="w-12 h-12 bg-yellow-400/20 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                        <span className="text-yellow-400 font-bold">Wall</span>
+                        <span className="text-yellow-400 font-bold font-geist">Wall</span>
                     </div>
-                    <h4 className="font-semibold">Video Walls</h4>
-                    <p className="text-sm text-gray-400">Custom configurations</p>
+                    <h4 className="font-outfit font-semibold">Video Walls</h4>
+                    <p className="text-sm text-gray-400 font-inter">Custom configurations</p>
                 </div>
             </div>
         </div>
@@ -232,31 +232,31 @@ const RentalContent = () => (
     <div className="bg-gradient-to-br from-purple-900 to-black rounded-3xl p-8 text-white">
         <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-                <h3 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                <h3 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-space tracking-tight">
                     Equipment Rental
                 </h3>
-                <p className="text-gray-300 text-lg mb-6">
+                <p className="text-gray-300 text-lg mb-6 font-inter leading-relaxed">
                     Rent LED displays for events, conferences, and temporary installations
                 </p>
                 <div className="space-y-4">
                     <div className="flex items-center gap-3">
                         <Calendar className="text-purple-400" size={20} />
-                        <span>Flexible Duration</span>
+                        <span className="font-inter font-medium">Flexible Duration</span>
                     </div>
                     <div className="flex items-center gap-3">
                         <Shield className="text-green-400" size={20} />
-                        <span>Setup & Support Included</span>
+                        <span className="font-inter font-medium">Setup & Support Included</span>
                     </div>
                     <div className="flex items-center gap-3">
                         <Clock className="text-blue-400" size={20} />
-                        <span>Same-Day Delivery</span>
+                        <span className="font-inter font-medium">Same-Day Delivery</span>
                     </div>
                 </div>
                 <div className="flex gap-4 mt-8">
-                    <button className="bg-white text-black px-6 py-3 rounded-full font-semibold hover:scale-105 transition-transform">
+                    <button className="bg-white text-black px-6 py-3 rounded-full font-geist font-semibold hover:scale-105 transition-transform">
                         Browse Rentals
                     </button>
-                    <button className="border border-white/30 px-6 py-3 rounded-full hover:bg-white/10 transition-colors">
+                    <button className="border border-white/30 px-6 py-3 rounded-full hover:bg-white/10 transition-colors font-geist font-medium">
                         Calculate Cost
                     </button>
                 </div>
@@ -264,23 +264,23 @@ const RentalContent = () => (
             <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                     <Calendar className="mx-auto mb-2 text-purple-400" size={24} />
-                    <h4 className="font-semibold">Daily</h4>
-                    <p className="text-sm text-gray-400">Short-term events</p>
+                    <h4 className="font-outfit font-semibold">Daily</h4>
+                    <p className="text-sm text-gray-400 font-inter">Short-term events</p>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                     <Clock className="mx-auto mb-2 text-blue-400" size={24} />
-                    <h4 className="font-semibold">Weekly</h4>
-                    <p className="text-sm text-gray-400">Conference packages</p>
+                    <h4 className="font-outfit font-semibold">Weekly</h4>
+                    <p className="text-sm text-gray-400 font-inter">Conference packages</p>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                     <Users className="mx-auto mb-2 text-green-400" size={24} />
-                    <h4 className="font-semibold">Monthly</h4>
-                    <p className="text-sm text-gray-400">Long-term installations</p>
+                    <h4 className="font-outfit font-semibold">Monthly</h4>
+                    <p className="text-sm text-gray-400 font-inter">Long-term installations</p>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                     <Award className="mx-auto mb-2 text-yellow-400" size={24} />
-                    <h4 className="font-semibold">Custom</h4>
-                    <p className="text-sm text-gray-400">Tailored solutions</p>
+                    <h4 className="font-outfit font-semibold">Custom</h4>
+                    <p className="text-sm text-gray-400 font-inter">Tailored solutions</p>
                 </div>
             </div>
         </div>
@@ -315,7 +315,7 @@ const MarketplaceTabsSection = () => {
             <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-16">
                     <motion.h2
-                        className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent mb-6"
+                        className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent mb-6 py-2 font-space tracking-tight"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
@@ -323,7 +323,7 @@ const MarketplaceTabsSection = () => {
                         Your Complete Digital Ecosystem
                     </motion.h2>
                     <motion.p
-                        className="text-xl text-gray-400 max-w-3xl mx-auto"
+                        className="text-xl text-gray-400 max-w-3xl mx-auto font-inter leading-relaxed"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}

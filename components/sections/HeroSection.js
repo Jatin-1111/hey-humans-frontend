@@ -75,9 +75,9 @@ const HeroSection = () => {
                 }}
                 className="z-50 flex flex-col justify-center items-center max-w-6xl mx-auto px-6"
             >
-                {/* Brand Logo */}
+                {/* Brand Logo - Space Grotesk for tech vibes */}
                 <motion.h1
-                    className="font-bold text-4xl md:text-6xl lg:text-8xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-300 py-4"
+                    className="font-space font-bold text-4xl md:text-6xl lg:text-8xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-300 py-4 tracking-tight"
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.2, duration: 0.8 }}
@@ -85,7 +85,7 @@ const HeroSection = () => {
                     Hey Humanz
                 </motion.h1>
 
-                {/* Tab Navigation */}
+                {/* Tab Navigation - Geist for UI elements */}
                 <motion.div
                     className="flex flex-wrap justify-center gap-4 mb-8 bg-black/20 backdrop-blur-md rounded-full p-2"
                     initial={{ y: 20, opacity: 0 }}
@@ -94,7 +94,7 @@ const HeroSection = () => {
                 >
                     <button
                         onClick={() => setActiveTab("services")}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 ${activeTab === "services"
+                        className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 font-geist font-medium ${activeTab === "services"
                             ? "bg-white text-black"
                             : "text-white hover:bg-white/10"
                             }`}
@@ -104,7 +104,7 @@ const HeroSection = () => {
                     </button>
                     <button
                         onClick={() => setActiveTab("displays")}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 ${activeTab === "displays"
+                        className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 font-geist font-medium ${activeTab === "displays"
                             ? "bg-white text-black"
                             : "text-white hover:bg-white/10"
                             }`}
@@ -114,7 +114,7 @@ const HeroSection = () => {
                     </button>
                     <button
                         onClick={() => setActiveTab("marketplace")}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 ${activeTab === "marketplace"
+                        className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 font-geist font-medium ${activeTab === "marketplace"
                             ? "bg-white text-black"
                             : "text-white hover:bg-white/10"
                             }`}
@@ -132,8 +132,9 @@ const HeroSection = () => {
                     transition={{ duration: 0.5 }}
                     className="text-center"
                 >
+                    {/* Section Title - Outfit for section headers */}
                     <motion.h2
-                        className="font-bold text-2xl md:text-4xl text-white mb-4"
+                        className="font-outfit font-bold text-2xl md:text-4xl text-white mb-4 tracking-tight"
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.4, duration: 0.8 }}
@@ -141,8 +142,9 @@ const HeroSection = () => {
                         {currentContent.title}
                     </motion.h2>
 
+                    {/* Subtitle - Inter for body text */}
                     <motion.p
-                        className="font-normal text-base md:text-xl text-neutral-300 max-w-lg text-center mx-auto mb-8"
+                        className="font-inter font-normal text-base md:text-xl text-neutral-300 max-w-lg text-center mx-auto mb-8"
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.5, duration: 0.8 }}
@@ -150,6 +152,7 @@ const HeroSection = () => {
                         {currentContent.subtitle}
                     </motion.p>
 
+                    {/* Buttons - Geist for UI elements */}
                     <motion.div
                         className="flex flex-col sm:flex-row gap-4 mb-12 justify-center"
                         initial={{ y: 20, opacity: 0 }}
@@ -159,7 +162,7 @@ const HeroSection = () => {
                         {currentContent.buttons.map((button, index) => (
                             <button
                                 key={index}
-                                className={`px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-xl ${button.primary
+                                className={`px-8 py-4 rounded-full font-geist font-semibold transition-all duration-300 hover:scale-105 shadow-xl ${button.primary
                                     ? "bg-white text-black hover:bg-gray-200"
                                     : "border border-white/30 text-white hover:bg-white/10"
                                     }`}
@@ -169,6 +172,7 @@ const HeroSection = () => {
                         ))}
                     </motion.div>
 
+                    {/* Stats - Geist for numbers, Inter for labels */}
                     <motion.div
                         className="flex flex-wrap justify-center gap-8 text-neutral-300 text-sm"
                         initial={{ opacity: 0 }}
@@ -177,27 +181,27 @@ const HeroSection = () => {
                     >
                         {currentContent.stats.map((stat, index) => (
                             <div key={index} className="text-center">
-                                <div className="text-2xl font-bold text-white">{stat.value}</div>
-                                <div className="text-xs md:text-sm">{stat.label}</div>
+                                <div className="text-2xl font-bold text-white font-geist tracking-tight">{stat.value}</div>
+                                <div className="text-xs md:text-sm font-inter font-medium">{stat.label}</div>
                             </div>
                         ))}
                     </motion.div>
                 </motion.div>
 
-                {/* Quick Access Pills */}
+                {/* Quick Access Pills - Inter for readable tags */}
                 <motion.div
                     className="flex flex-wrap justify-center gap-3 mt-8 max-w-md"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1, duration: 0.8 }}
                 >
-                    <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-xs">
+                    <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-xs font-inter font-medium">
                         P2.5 • P4 • P6 Displays
                     </span>
-                    <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-xs">
+                    <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-xs font-inter font-medium">
                         Video Editing Services
                     </span>
-                    <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-xs">
+                    <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-xs font-inter font-medium">
                         Rental Solutions
                     </span>
                 </motion.div>

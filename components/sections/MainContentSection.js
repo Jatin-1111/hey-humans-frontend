@@ -118,43 +118,43 @@ const MainContentSection = () => {
     return (
         <section className="main-section relative min-h-[150vh] px-6 py-20 bg-black text-white">
             <div className="max-w-6xl mx-auto">
-                {/* Logo */}
+                {/* Logo - Space Grotesk for brand consistency */}
                 <div className="text-center mb-16">
                     <h1
                         ref={logoRef}
-                        className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent"
+                        className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent font-space tracking-tight py-2"
                     >
                         Hey Humanz
                     </h1>
                 </div>
 
-                {/* Text Content */}
+                {/* Text Content - Strategic font mixing */}
                 <div className="text-center mb-16 space-y-6">
                     <h2
                         ref={addToTextRefs}
-                        className="text-2xl md:text-4xl font-light leading-relaxed"
+                        className="text-2xl md:text-4xl font-light leading-relaxed font-outfit tracking-wide"
                     >
                         Triple Marketplace Revolution
                     </h2>
                     <p
                         ref={addToTextRefs}
-                        className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto"
+                        className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto font-inter leading-relaxed"
                     >
                         Video Creation Services • LED Display Sales • Equipment Rentals
                     </p>
                     <p
                         ref={addToTextRefs}
-                        className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto"
+                        className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-inter leading-relaxed"
                     >
                         One platform for content creators, display buyers, and event organizers
                     </p>
                 </div>
 
-                {/* CTA Button */}
+                {/* CTA Button - Geist for UI elements */}
                 <div className="text-center mb-32">
                     <button
                         ref={ctaRef}
-                        className="bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-200 transition-colors duration-300 hover:scale-105 transform"
+                        className="bg-white text-black px-8 py-4 rounded-full text-lg font-geist font-semibold hover:bg-gray-200 transition-colors duration-300 hover:scale-105 transform"
                     >
                         Explore Hey Humanz
                     </button>

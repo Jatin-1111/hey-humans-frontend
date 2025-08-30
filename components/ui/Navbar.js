@@ -189,23 +189,23 @@ const Navbar = ({ className }) => {
                                 <div className="flex items-center space-x-3">
                                     <Phone className="text-blue-500" size={20} />
                                     <div>
-                                        <h4 className="font-bold text-black dark:text-white">Phone</h4>
-                                        <p className="text-neutral-700 dark:text-neutral-300">+1 (555) 123-4567</p>
+                                        <h4 className="font-bold text-black dark:text-white font-outfit">Phone</h4>
+                                        <p className="text-neutral-700 dark:text-neutral-300 font-inter">+1 (555) 123-4567</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <Mail className="text-green-500" size={20} />
                                     <div>
-                                        <h4 className="font-bold text-black dark:text-white">Email</h4>
-                                        <p className="text-neutral-700 dark:text-neutral-300">hello@heyhumanz.com</p>
+                                        <h4 className="font-bold text-black dark:text-white font-outfit">Email</h4>
+                                        <p className="text-neutral-700 dark:text-neutral-300 font-inter">hello@heyhumanz.com</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <MessageCircle className="text-purple-500" size={20} />
                                     <div>
                                         <HoveredLink href="/contact/chat">
-                                            <h4 className="font-bold">Live Chat</h4>
-                                            <p className="text-neutral-700 dark:text-neutral-300">Available 24/7</p>
+                                            <h4 className="font-bold font-outfit">Live Chat</h4>
+                                            <p className="text-neutral-700 dark:text-neutral-300 font-inter">Available 24/7</p>
                                         </HoveredLink>
                                     </div>
                                 </div>
@@ -216,7 +216,7 @@ const Navbar = ({ className }) => {
                                 <HoveredLink href="/contact">General Contact</HoveredLink>
                                 <div className="flex items-center space-x-2">
                                     <MapPin className="text-orange-500" size={16} />
-                                    <p className="text-neutral-700 dark:text-neutral-300 text-xs">
+                                    <p className="text-neutral-700 dark:text-neutral-300 text-xs font-inter">
                                         San Francisco, CA
                                     </p>
                                 </div>
@@ -233,8 +233,8 @@ const Navbar = ({ className }) => {
                                 >
                                     <LogIn className="text-blue-500" size={20} />
                                     <div>
-                                        <h4 className="font-bold text-black dark:text-white">Login</h4>
-                                        <p className="text-neutral-700 dark:text-neutral-300 text-xs">Access your account</p>
+                                        <h4 className="font-bold text-black dark:text-white font-outfit">Login</h4>
+                                        <p className="text-neutral-700 dark:text-neutral-300 text-xs font-inter">Access your account</p>
                                     </div>
                                 </a>
                                 <a
@@ -244,14 +244,14 @@ const Navbar = ({ className }) => {
                                     <User className="text-green-500" size={20} />
                                     <div className="flex-1">
                                         <div className="flex items-center space-x-2">
-                                            <h4 className="font-bold text-black dark:text-white">Sign Up</h4>
-                                            <span className="px-2 py-1 bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300 text-xs rounded-full">Free</span>
+                                            <h4 className="font-bold text-black dark:text-white font-outfit">Sign Up</h4>
+                                            <span className="px-2 py-1 bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300 text-xs rounded-full font-geist font-medium">Free</span>
                                         </div>
-                                        <p className="text-neutral-700 dark:text-neutral-300 text-xs">Create a new account</p>
+                                        <p className="text-neutral-700 dark:text-neutral-300 text-xs font-inter">Create a new account</p>
                                     </div>
                                 </a>
                                 <HoveredLink href="/forgot-password" className="block px-3 py-2">
-                                    <span className="text-xs">Forgot Password?</span>
+                                    <span className="text-xs font-inter">Forgot Password?</span>
                                 </HoveredLink>
                             </div>
                         </div>
@@ -262,9 +262,9 @@ const Navbar = ({ className }) => {
             {/* Mobile Navbar */}
             <div className="lg:hidden fixed top-0 left-0 right-0 z-[100] bg-black/90 backdrop-blur-xl border-b border-white/10">
                 <div className="flex items-center justify-between px-6 py-4">
-                    {/* Logo */}
+                    {/* Logo - Space Grotesk for brand consistency */}
                     <motion.div
-                        className="text-white font-bold text-xl flex items-center gap-2"
+                        className="text-white font-bold text-xl flex items-center gap-2 font-space tracking-tight"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
@@ -333,10 +333,10 @@ const Navbar = ({ className }) => {
                                                     {section.icon}
                                                 </div>
                                                 <div className="text-left">
-                                                    <h3 className="text-white font-semibold text-lg">
+                                                    <h3 className="text-white font-semibold text-lg font-outfit">
                                                         {section.title}
                                                     </h3>
-                                                    <p className="text-gray-400 text-sm">
+                                                    <p className="text-gray-400 text-sm font-inter">
                                                         {section.description}
                                                     </p>
                                                 </div>
@@ -373,11 +373,11 @@ const Navbar = ({ className }) => {
                                                             >
                                                                 <div className="flex-1">
                                                                     <div className="flex items-center gap-3">
-                                                                        <h4 className="text-white font-medium">
+                                                                        <h4 className="text-white font-medium font-outfit">
                                                                             {item.title}
                                                                         </h4>
                                                                         {item.badge && (
-                                                                            <span className="px-2 py-1 bg-blue-400/20 text-blue-400 text-xs rounded-full">
+                                                                            <span className="px-2 py-1 bg-blue-400/20 text-blue-400 text-xs rounded-full font-geist font-medium">
                                                                                 {item.badge}
                                                                             </span>
                                                                         )}
@@ -385,7 +385,7 @@ const Navbar = ({ className }) => {
                                                                             <Sparkles className="text-yellow-400" size={16} />
                                                                         )}
                                                                     </div>
-                                                                    <p className="text-gray-400 text-sm mt-1">
+                                                                    <p className="text-gray-400 text-sm mt-1 font-inter">
                                                                         {item.desc}
                                                                     </p>
                                                                 </div>
@@ -410,7 +410,7 @@ const Navbar = ({ className }) => {
                                     transition={{ delay: 0.4 }}
                                 >
                                     <motion.button
-                                        className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-4 rounded-2xl font-semibold text-lg shadow-xl"
+                                        className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-4 rounded-2xl font-semibold text-lg shadow-xl font-geist"
                                         onClick={closeMobileMenu}
                                         whileHover={{ scale: 1.02, boxShadow: "0 20px 40px rgba(59, 130, 246, 0.3)" }}
                                         whileTap={{ scale: 0.98 }}
@@ -418,7 +418,7 @@ const Navbar = ({ className }) => {
                                         Get Started Today
                                     </motion.button>
                                     <motion.button
-                                        className="w-full border-2 border-white/20 text-white py-4 rounded-2xl font-semibold hover:bg-white/10 transition-colors"
+                                        className="w-full border-2 border-white/20 text-white py-4 rounded-2xl font-semibold hover:bg-white/10 transition-colors font-geist"
                                         onClick={closeMobileMenu}
                                         whileHover={{ scale: 1.02, borderColor: "rgba(255, 255, 255, 0.4)" }}
                                         whileTap={{ scale: 0.98 }}
