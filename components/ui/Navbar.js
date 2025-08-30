@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { MenuItem, Menu, ProductItem, HoveredLink } from "@/components/ui/NavbarMenu";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Play, Monitor, Calendar, ShoppingCart, ChevronDown, ArrowRight, Sparkles, Menu as MenuIcon } from "lucide-react";
+import { X, Play, Monitor, Calendar, ShoppingCart, ChevronDown, ArrowRight, Sparkles, Menu as MenuIcon, User, LogIn, Phone, Mail, MessageCircle, MapPin } from "lucide-react";
 
 const Navbar = ({ className }) => {
     const [active, setActive] = useState(null);
@@ -80,6 +80,31 @@ const Navbar = ({ className }) => {
             items: [
                 { title: 'Browse All', href: '/marketplace', desc: 'Complete marketplace view', featured: true }
             ]
+        },
+        {
+            id: 'contact',
+            title: 'Contact',
+            icon: <Phone size={20} />,
+            color: 'orange',
+            description: 'Get in touch with our team',
+            items: [
+                { title: 'Sales Inquiry', href: '/contact/sales', desc: 'Quote requests & purchases' },
+                { title: 'Technical Support', href: '/contact/support', desc: '24/7 technical assistance' },
+                { title: 'General Contact', href: '/contact', desc: 'Questions & feedback' },
+                { title: 'Live Chat', href: '/contact/chat', desc: 'Instant messaging support', badge: 'Live' }
+            ]
+        },
+        {
+            id: 'account',
+            title: 'Account',
+            icon: <User size={20} />,
+            color: 'indigo',
+            description: 'Sign in or create account',
+            items: [
+                { title: 'Login', href: '/login', desc: 'Access your account' },
+                { title: 'Sign Up', href: '/signup', desc: 'Create a new account', badge: 'Free' },
+                { title: 'Forgot Password', href: '/forgot-password', desc: 'Reset your password' }
+            ]
         }
     ];
 
@@ -88,15 +113,17 @@ const Navbar = ({ className }) => {
             blue: 'text-blue-400 bg-blue-400/10 border-blue-400/20',
             green: 'text-green-400 bg-green-400/10 border-green-400/20',
             purple: 'text-purple-400 bg-purple-400/10 border-purple-400/20',
-            yellow: 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20'
+            yellow: 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20',
+            orange: 'text-orange-400 bg-orange-400/10 border-orange-400/20',
+            indigo: 'text-indigo-400 bg-indigo-400/10 border-indigo-400/20'
         };
         return colors[color] || colors.blue;
     };
 
     return (
         <>
-            {/* Desktop Navbar - unchanged for desktop */}
-            <div className={cn("hidden lg:block fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}>
+            {/* Desktop Navbar */}
+            <div className={cn("hidden lg:block fixed top-10 inset-x-0 max-w-4xl mx-auto z-50", className)}>
                 <Menu setActive={setActive}>
                     <MenuItem setActive={setActive} active={active} item="Services">
                         <div className="flex flex-col space-y-4 text-sm">
@@ -155,6 +182,80 @@ const Navbar = ({ className }) => {
                             />
                         </div>
                     </MenuItem>
+
+                    <MenuItem setActive={setActive} active={active} item="Contact">
+                        <div className="text-sm grid grid-cols-2 gap-10 p-4">
+                            <div className="space-y-4">
+                                <div className="flex items-center space-x-3">
+                                    <Phone className="text-blue-500" size={20} />
+                                    <div>
+                                        <h4 className="font-bold text-black dark:text-white">Phone</h4>
+                                        <p className="text-neutral-700 dark:text-neutral-300">+1 (555) 123-4567</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center space-x-3">
+                                    <Mail className="text-green-500" size={20} />
+                                    <div>
+                                        <h4 className="font-bold text-black dark:text-white">Email</h4>
+                                        <p className="text-neutral-700 dark:text-neutral-300">hello@heyhumanz.com</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center space-x-3">
+                                    <MessageCircle className="text-purple-500" size={20} />
+                                    <div>
+                                        <HoveredLink href="/contact/chat">
+                                            <h4 className="font-bold">Live Chat</h4>
+                                            <p className="text-neutral-700 dark:text-neutral-300">Available 24/7</p>
+                                        </HoveredLink>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="space-y-4">
+                                <HoveredLink href="/contact/sales">Sales Inquiry</HoveredLink>
+                                <HoveredLink href="/contact/support">Technical Support</HoveredLink>
+                                <HoveredLink href="/contact">General Contact</HoveredLink>
+                                <div className="flex items-center space-x-2">
+                                    <MapPin className="text-orange-500" size={16} />
+                                    <p className="text-neutral-700 dark:text-neutral-300 text-xs">
+                                        San Francisco, CA
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </MenuItem>
+
+                    <MenuItem setActive={setActive} active={active} item="Account">
+                        <div className="text-sm grid grid-cols-1 gap-4 p-4 min-w-[280px]">
+                            <div className="space-y-4">
+                                <a
+                                    href="/login"
+                                    className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                                >
+                                    <LogIn className="text-blue-500" size={20} />
+                                    <div>
+                                        <h4 className="font-bold text-black dark:text-white">Login</h4>
+                                        <p className="text-neutral-700 dark:text-neutral-300 text-xs">Access your account</p>
+                                    </div>
+                                </a>
+                                <a
+                                    href="/signup"
+                                    className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border border-green-500/20 bg-green-50/50 dark:bg-green-900/20"
+                                >
+                                    <User className="text-green-500" size={20} />
+                                    <div className="flex-1">
+                                        <div className="flex items-center space-x-2">
+                                            <h4 className="font-bold text-black dark:text-white">Sign Up</h4>
+                                            <span className="px-2 py-1 bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300 text-xs rounded-full">Free</span>
+                                        </div>
+                                        <p className="text-neutral-700 dark:text-neutral-300 text-xs">Create a new account</p>
+                                    </div>
+                                </a>
+                                <HoveredLink href="/forgot-password" className="block px-3 py-2">
+                                    <span className="text-xs">Forgot Password?</span>
+                                </HoveredLink>
+                            </div>
+                        </div>
+                    </MenuItem>
                 </Menu>
             </div>
 
@@ -171,7 +272,7 @@ const Navbar = ({ className }) => {
                         Hey Humanz
                     </motion.div>
 
-                    {/* Mobile Menu Button - Fixed with proper z-index */}
+                    {/* Mobile Menu Button */}
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         className="relative w-10 h-10 flex items-center justify-center text-white hover:text-gray-300 transition-colors z-[110]"
