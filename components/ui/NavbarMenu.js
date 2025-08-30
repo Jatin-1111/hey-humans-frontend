@@ -96,7 +96,7 @@ export const HoveredLink = ({
     return (
         <a
             {...rest}
-            className="text-neutral-700 dark:text-neutral-200 hover:text-black ">
+            className="text-neutral-700 dark:text-neutral-200 hover:text-neutral-900 dark:hover:text-white transition-colors">
             {children}
         </a>
     );
