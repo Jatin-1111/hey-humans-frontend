@@ -124,7 +124,7 @@ const MainContentSection = () => {
                         ref={logoRef}
                         className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent"
                     >
-                        VideoVault
+                        Hey Humanz
                     </h1>
                 </div>
 
@@ -156,7 +156,7 @@ const MainContentSection = () => {
                         ref={ctaRef}
                         className="bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-200 transition-colors duration-300 hover:scale-105 transform"
                     >
-                        Explore VideoVault
+                        Explore Hey Humanz
                     </button>
                 </div>
 

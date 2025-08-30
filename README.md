@@ -1,4 +1,4 @@
-# 🎬 VideoVault
+# 🎬 Hey Humanz
 
 > Premium Video Editor Marketplace - Connecting clients with professional video editors
 
@@ -9,9 +9,9 @@
 
 ## 🎯 Overview
 
-VideoVault is a dark-themed, UI-focused marketplace that connects clients with professional video editors. Built for the modern creator economy, it offers seamless project management, secure payments, and a premium user experience.
+Hey Humanz is a dark-themed, UI-focused marketplace that connects clients with professional video editors. Built for the modern creator economy, it offers seamless project management, secure payments, and a premium user experience.
 
-**Live Demo:** [videovault.app](https://videovault.app) _(Coming Soon)_
+**Live Demo:** [Hey Humanz.app](https://Hey Humanz.app) _(Coming Soon)_
 
 ---
 
@@ -42,8 +42,8 @@ VideoVault is a dark-themed, UI-focused marketplace that connects clients with p
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/videovault.git
-cd videovault
+git clone https://github.com/your-username/Hey Humanz.git
+cd Hey Humanz
 
 # Install frontend dependencies
 cd frontend
@@ -77,7 +77,7 @@ Visit [http://localhost:3000](http://localhost:3000) to see the application.
 ## 📁 Project Structure
 
 ```
-videovault/
+Hey Humanz/
 ├── frontend/                 # Next.js Frontend
 │   ├── src/
 │   │   ├── app/             # App Router (Next.js 14)
@@ -199,7 +199,7 @@ NEXT_PUBLIC_RAZORPAY_KEY=your_razorpay_key
 
 ```env
 # Database
-MONGODB_URI=mongodb://localhost:27017/videovault
+MONGODB_URI=mongodb://localhost:27017/Hey Humanz
 
 # Authentication
 JWT_SECRET=your_super_secret_jwt_key
@@ -362,10 +362,10 @@ npm run test:all
 
 ## 📞 Support & Contact
 
-- **Email:** support@videovault.app
-- **Discord:** [Join our community](https://discord.gg/videovault)
-- **Issues:** [GitHub Issues](https://github.com/your-username/videovault/issues)
-- **Documentation:** [docs.videovault.app](https://docs.videovault.app)
+- **Email:** support@Hey Humanz.app
+- **Discord:** [Join our community](https://discord.gg/Hey Humanz)
+- **Issues:** [GitHub Issues](https://github.com/your-username/Hey Humanz/issues)
+- **Documentation:** [docs.Hey Humanz.app](https://docs.Hey Humanz.app)
 
 ---
 

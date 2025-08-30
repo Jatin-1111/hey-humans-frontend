@@ -82,7 +82,7 @@ const HeroSection = () => {
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.2, duration: 0.8 }}
                 >
-                    VideoVault
+                    Hey Humanz
                 </motion.h1>
 
                 {/* Tab Navigation */}
@@ -95,8 +95,8 @@ const HeroSection = () => {
                     <button
                         onClick={() => setActiveTab("services")}
                         className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 ${activeTab === "services"
-                                ? "bg-white text-black"
-                                : "text-white hover:bg-white/10"
+                            ? "bg-white text-black"
+                            : "text-white hover:bg-white/10"
                             }`}
                     >
                         <Play size={18} />
@@ -105,8 +105,8 @@ const HeroSection = () => {
                     <button
                         onClick={() => setActiveTab("displays")}
                         className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 ${activeTab === "displays"
-                                ? "bg-white text-black"
-                                : "text-white hover:bg-white/10"
+                            ? "bg-white text-black"
+                            : "text-white hover:bg-white/10"
                             }`}
                     >
                         <Monitor size={18} />
@@ -115,8 +115,8 @@ const HeroSection = () => {
                     <button
                         onClick={() => setActiveTab("marketplace")}
                         className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 ${activeTab === "marketplace"
-                                ? "bg-white text-black"
-                                : "text-white hover:bg-white/10"
+                            ? "bg-white text-black"
+                            : "text-white hover:bg-white/10"
                             }`}
                     >
                         <ShoppingCart size={18} />
@@ -160,8 +160,8 @@ const HeroSection = () => {
                             <button
                                 key={index}
                                 className={`px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-xl ${button.primary
-                                        ? "bg-white text-black hover:bg-gray-200"
-                                        : "border border-white/30 text-white hover:bg-white/10"
+                                    ? "bg-white text-black hover:bg-gray-200"
+                                    : "border border-white/30 text-white hover:bg-white/10"
                                     }`}
                             >
                                 {button.text}
