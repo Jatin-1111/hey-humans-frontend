@@ -5,12 +5,14 @@ import Navbar from '@/components/ui/Navbar';
 import HeroSection from '@/components/sections/HeroSection';
 import MainContentSection from '@/components/sections/MainContentSection';
 import FooterSection from '@/components/sections/FooterSection';
+import MarketplaceTabsSection from '@/components/sections/MarketplaceTabsSection';
 
 export default function HeyHumanzLanding() {
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
       <Navbar />
       <HeroSection />
+      <MarketplaceTabsSection />
       <MainContentSection />
       <FooterSection />
 
