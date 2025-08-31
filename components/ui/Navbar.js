@@ -102,8 +102,7 @@ const Navbar = ({ className }) => {
             description: 'Sign in or create account',
             items: [
                 { title: 'Login', href: '/login', desc: 'Access your account' },
-                { title: 'Sign Up', href: '/signup', desc: 'Create a new account', badge: 'Free' },
-                { title: 'Forgot Password', href: '/forgot-password', desc: 'Reset your password' }
+                { title: 'Sign Up', href: '/signup', desc: 'Create a new account', badge: 'Free' }
             ]
         }
     ];
@@ -250,9 +249,6 @@ const Navbar = ({ className }) => {
                                         <p className="text-neutral-700 dark:text-neutral-300 text-xs font-inter">Create a new account</p>
                                     </div>
                                 </a>
-                                <HoveredLink href="/forgot-password" className="block px-3 py-2">
-                                    <span className="text-xs font-inter">Forgot Password?</span>
-                                </HoveredLink>
                             </div>
                         </div>
                     </MenuItem>
