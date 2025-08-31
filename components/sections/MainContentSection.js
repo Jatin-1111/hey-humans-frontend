@@ -116,132 +116,132 @@ const MainContentSection = () => {
     };
 
     return (
-        <section className="main-section relative min-h-[150vh] px-6 py-20 bg-black text-white">
-            <div className="max-w-6xl mx-auto">
+        <section className="main-section relative min-h-screen lg:min-h-[150vh] px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 bg-black text-white overflow-hidden">
+            <div className="max-w-7xl mx-auto">
                 {/* Logo - Space Grotesk for brand consistency */}
-                <div className="text-center mb-16">
+                <div className="text-center mb-12 sm:mb-16">
                     <h1
                         ref={logoRef}
-                        className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent font-space tracking-tight py-2"
+                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent font-space tracking-tight leading-tight"
                     >
                         Hey Humanz
                     </h1>
                 </div>
 
                 {/* Text Content - Strategic font mixing */}
-                <div className="text-center mb-16 space-y-6">
+                <div className="text-center mb-16 sm:mb-20 lg:mb-32 space-y-4 sm:space-y-6">
                     <h2
                         ref={addToTextRefs}
-                        className="text-2xl md:text-4xl font-light leading-relaxed font-outfit tracking-wide"
+                        className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light leading-relaxed font-outfit tracking-wide px-4"
                     >
                         Triple Marketplace Revolution
                     </h2>
                     <p
                         ref={addToTextRefs}
-                        className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto font-inter leading-relaxed"
+                        className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-xs sm:max-w-md lg:max-w-3xl mx-auto font-inter leading-relaxed px-4"
                     >
                         Video Creation Services • LED Display Sales • Equipment Rentals
                     </p>
                     <p
                         ref={addToTextRefs}
-                        className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-inter leading-relaxed"
+                        className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400 max-w-xs sm:max-w-lg lg:max-w-2xl mx-auto font-inter leading-relaxed px-4"
                     >
                         One platform for content creators, display buyers, and event organizers
                     </p>
                 </div>
 
                 {/* CTA Button - Geist for UI elements */}
-                <div className="text-center mb-32">
+                <div className="text-center mb-16 sm:mb-20 lg:mb-32">
                     <button
                         ref={ctaRef}
-                        className="bg-white text-black px-8 py-4 rounded-full text-lg font-geist font-semibold hover:bg-gray-200 transition-colors duration-300 hover:scale-105 transform"
+                        className="bg-white text-black px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-geist font-semibold hover:bg-gray-200 transition-colors duration-300 hover:scale-105 transform"
                     >
                         Explore Hey Humanz
                     </button>
                 </div>
 
-                {/* Image Cards Grid */}
-                <div className="space-y-20">
+                {/* Image Cards Grid - Mobile Optimized */}
+                <div className="space-y-12 sm:space-y-16 lg:space-y-20">
                     {/* Row 1 - Video Services */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
                         <div
                             ref={addToCardsRefs}
-                            className="w-full max-w-md mx-auto md:ml-auto md:mr-0 relative h-72"
+                            className="w-full max-w-sm sm:max-w-md mx-auto lg:ml-auto lg:mr-0 relative h-64 sm:h-72 lg:h-80"
                         >
                             <Image
                                 src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=600&h=360&fit=crop"
                                 alt="Video Editing Setup"
                                 fill
                                 className="object-cover rounded-xl shadow-xl"
-                                sizes="(max-width: 768px) 90vw, 40vw"
+                                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 40vw"
                             />
                         </div>
                         <div
                             ref={addToCardsRefs}
-                            className="w-full max-w-md mx-auto md:mr-auto md:ml-0 relative h-72"
+                            className="w-full max-w-sm sm:max-w-md mx-auto lg:mr-auto lg:ml-0 relative h-64 sm:h-72 lg:h-80"
                         >
                             <Image
                                 src="https://images.unsplash.com/photo-1536240478700-b869070f9279?w=600&h=360&fit=crop"
                                 alt="Creative Workspace"
                                 fill
                                 className="object-cover rounded-xl shadow-xl"
-                                sizes="(max-width: 768px) 90vw, 40vw"
+                                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 40vw"
                             />
                         </div>
                     </div>
 
                     {/* Row 2 - LED Displays */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
                         <div
                             ref={addToCardsRefs}
-                            className="w-full max-w-md mx-auto md:ml-auto md:mr-0 md:order-2 relative h-72"
+                            className="w-full max-w-sm sm:max-w-md mx-auto lg:ml-auto lg:mr-0 lg:order-2 relative h-64 sm:h-72 lg:h-80"
                         >
                             <Image
                                 src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=360&fit=crop"
                                 alt="LED Display Screens"
                                 fill
                                 className="object-cover rounded-xl shadow-xl"
-                                sizes="(max-width: 768px) 90vw, 40vw"
+                                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 40vw"
                             />
                         </div>
                         <div
                             ref={addToCardsRefs}
-                            className="w-full max-w-md mx-auto md:mr-auto md:ml-0 md:order-1 relative h-72"
+                            className="w-full max-w-sm sm:max-w-md mx-auto lg:mr-auto lg:ml-0 lg:order-1 relative h-64 sm:h-72 lg:h-80"
                         >
                             <Image
                                 src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600&h=360&fit=crop"
                                 alt="Outdoor LED Wall"
                                 fill
                                 className="object-cover rounded-xl shadow-xl"
-                                sizes="(max-width: 768px) 90vw, 40vw"
+                                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 40vw"
                             />
                         </div>
                     </div>
 
                     {/* Row 3 - Rental Solutions */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
                         <div
                             ref={addToCardsRefs}
-                            className="w-full max-w-md mx-auto md:ml-auto md:mr-0 relative h-72"
+                            className="w-full max-w-sm sm:max-w-md mx-auto lg:ml-auto lg:mr-0 relative h-64 sm:h-72 lg:h-80"
                         >
                             <Image
                                 src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=360&fit=crop"
                                 alt="Event Display Rental"
                                 fill
                                 className="object-cover rounded-xl shadow-xl"
-                                sizes="(max-width: 768px) 90vw, 40vw"
+                                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 40vw"
                             />
                         </div>
                         <div
                             ref={addToCardsRefs}
-                            className="w-full max-w-md mx-auto md:mr-auto md:ml-0 relative h-72"
+                            className="w-full max-w-sm sm:max-w-md mx-auto lg:mr-auto lg:ml-0 relative h-64 sm:h-72 lg:h-80"
                         >
                             <Image
                                 src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600&h=360&fit=crop"
                                 alt="Corporate Display Setup"
                                 fill
                                 className="object-cover rounded-xl shadow-xl"
-                                sizes="(max-width: 768px) 90vw, 40vw"
+                                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 40vw"
                             />
                         </div>
                     </div>
