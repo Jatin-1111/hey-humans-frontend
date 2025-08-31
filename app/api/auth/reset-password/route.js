@@ -1,3 +1,8 @@
+import { sendPasswordResetEmail } from "@/lib/email";
+import { connectDB } from "@/lib/mongodb";
+import { User } from "@/models/User";
+import { NextResponse } from "next/server";
+
 export async function POST(req) {
     try {
         await connectDB();

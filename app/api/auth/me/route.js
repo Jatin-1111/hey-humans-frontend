@@ -1,4 +1,7 @@
+import { connectDB } from '@/lib/mongodb';
 import { authenticate } from '@/middleware/auth';
+import { User } from '@/models/User';
+import { NextResponse } from 'next/server';
 
 export async function GET(req) {
     try {

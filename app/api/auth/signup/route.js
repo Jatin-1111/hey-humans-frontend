@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import { connectDB } from '@/lib/mongodb';
 import { User } from '@/models/User';
 import { rateLimit } from '@/lib/rateLimit';
+import { sendVerificationEmail } from '@/lib/email';
 
 // Input validation schemas
 const validateInput = (data) => {
@@ -288,7 +289,7 @@ export async function POST(req) {
         );
 
         // Send verification email (commented out for now)
-        /*
+
         try {
             await sendVerificationEmail(email, verificationToken, name);
             console.log('📧 Verification email sent successfully');
@@ -296,7 +297,6 @@ export async function POST(req) {
             console.error('📧 Email sending failed:', emailError.message);
             // Don't fail registration if email fails
         }
-        */
 
         // Generate auth token for immediate login (optional)
         const authToken = jwt.sign(
