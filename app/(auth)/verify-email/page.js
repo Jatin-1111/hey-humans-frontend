@@ -1,11 +1,12 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle, AlertCircle, Mail, Loader, Sparkles } from 'lucide-react';
 
-export default function VerifyEmailPage() {
-    const [status, setStatus] = useState('loading'); // loading, success, error
+// Create a separate component that uses useSearchParams
+function VerifyEmailContent() {
+    const [status, setStatus] = useState('loading'); // loading, success, error, waiting
     const [message, setMessage] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const router = useRouter();
@@ -17,8 +18,12 @@ export default function VerifyEmailPage() {
         // Get user email from localStorage if available
         const userData = localStorage.getItem('user');
         if (userData) {
-            const user = JSON.parse(userData);
-            setUserEmail(user.email);
+            try {
+                const user = JSON.parse(userData);
+                setUserEmail(user.email);
+            } catch (error) {
+                console.error('Error parsing user data:', error);
+            }
         }
 
         if (token) {
@@ -52,6 +57,7 @@ export default function VerifyEmailPage() {
                 setMessage(data.error || 'Verification failed');
             }
         } catch (error) {
+            console.error('Verification error:', error);
             setStatus('error');
             setMessage('Network error. Please try again.');
         }
@@ -63,8 +69,26 @@ export default function VerifyEmailPage() {
             return;
         }
 
-        // Implementation for resend would go here
-        setMessage('Verification email resent! Check your inbox.');
+        try {
+            // You'll need to implement this API endpoint
+            const response = await fetch('/api/auth/resend-verification', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: userEmail }),
+            });
+
+            if (response.ok) {
+                setMessage('Verification email resent! Check your inbox.');
+            } else {
+                const data = await response.json();
+                setMessage(data.error || 'Failed to resend verification email.');
+            }
+        } catch (error) {
+            console.error('Resend error:', error);
+            setMessage('Failed to resend verification email. Please try again.');
+        }
     };
 
     return (
@@ -106,7 +130,7 @@ export default function VerifyEmailPage() {
 
                 {/* Actions */}
                 <div className="space-y-4">
-                    {status === 'error' && (
+                    {(status === 'error' || status === 'waiting') && (
                         <button
                             onClick={resendVerification}
                             className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-geist"
@@ -133,5 +157,34 @@ export default function VerifyEmailPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+// Loading fallback component
+function VerifyEmailFallback() {
+    return (
+        <div className="min-h-screen bg-black flex items-center justify-center px-4">
+            <div className="max-w-md w-full text-center space-y-8">
+                <div>
+                    <Link href="/" className="inline-flex items-center gap-2 text-white hover:text-gray-300 transition-colors mb-8">
+                        <Sparkles className="w-8 h-8 text-blue-400" />
+                        <span className="text-2xl font-bold font-space">Hey Humanz</span>
+                    </Link>
+                </div>
+                <div className="flex justify-center">
+                    <Loader className="w-16 h-16 text-blue-400 animate-spin" />
+                </div>
+                <h1 className="text-3xl font-bold text-white font-outfit">Loading...</h1>
+            </div>
+        </div>
+    );
+}
+
+// Main component with Suspense wrapper
+export default function VerifyEmailPage() {
+    return (
+        <Suspense fallback={<VerifyEmailFallback />}>
+            <VerifyEmailContent />
+        </Suspense>
     );
 }
