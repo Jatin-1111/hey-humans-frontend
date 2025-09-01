@@ -1,4 +1,4 @@
-// models/User.js
+// models/User.js - FIXED VERSION
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, 'Email is required'],
-        unique: true,
+        unique: true,  // ✅ This creates the index automatically
         lowercase: true,
         trim: true,
         match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please provide a valid email']
@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
         default: 'user'
     },
 
-    // NEW: Freelancer Profile (optional for users)
+    // Freelancer Profile (optional for users)
     freelancerProfile: {
         isFreelancer: {
             type: Boolean,
@@ -90,7 +90,7 @@ const userSchema = new mongoose.Schema({
         }
     },
 
-    // NEW: Activity tracking
+    // Activity tracking
     activityStats: {
         projectsPosted: {
             type: Number,
@@ -114,7 +114,7 @@ const userSchema = new mongoose.Schema({
         }
     },
 
-    // Existing fields
+    // Authentication & verification fields
     isVerified: {
         type: Boolean,
         default: false
@@ -151,14 +151,16 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Indexes for performance
-userSchema.index({ email: 1 }, { unique: true });
+// ✅ FIXED: Removed duplicate email index - it's already created by unique: true
+// Only create indexes that aren't automatically created
 userSchema.index({ 'freelancerProfile.isFreelancer': 1 });
 userSchema.index({ 'freelancerProfile.skills': 1 });
 userSchema.index({ 'freelancerProfile.rating.average': -1 });
 userSchema.index({ verificationToken: 1 });
 userSchema.index({ passwordResetToken: 1 });
 userSchema.index({ role: 1 });
+userSchema.index({ createdAt: -1 }); // For sorting by creation date
+userSchema.index({ lastLogin: -1 }); // For activity tracking
 
 // Virtual for checking if user has freelancer capabilities
 userSchema.virtual('canFreelance').get(function () {
@@ -184,7 +186,7 @@ userSchema.virtual('profileCompletion').get(function () {
     return Math.min(completion, 100);
 });
 
-// Pre-save middleware to update timestamps
+// Pre-save middleware to update timestamps and validate freelancer profile
 userSchema.pre('save', function (next) {
     this.updatedAt = Date.now();
 
@@ -211,11 +213,17 @@ userSchema.methods.disableFreelancerMode = function () {
     return this.save();
 };
 
-// Method to add skill
+// Method to add skill (avoids duplicates)
 userSchema.methods.addSkill = function (skill) {
     if (!this.freelancerProfile.skills.includes(skill)) {
         this.freelancerProfile.skills.push(skill);
     }
+    return this.save();
+};
+
+// Method to remove skill
+userSchema.methods.removeSkill = function (skill) {
+    this.freelancerProfile.skills = this.freelancerProfile.skills.filter(s => s !== skill);
     return this.save();
 };
 
@@ -224,8 +232,17 @@ userSchema.methods.updateRating = function (newRating) {
     const current = this.freelancerProfile.rating;
     const totalRating = (current.average * current.count) + newRating;
     current.count += 1;
-    current.average = totalRating / current.count;
+    current.average = Math.round((totalRating / current.count) * 10) / 10; // Round to 1 decimal
     return this.save();
+};
+
+// Method to increment activity stats
+userSchema.methods.incrementStat = function (statName, value = 1) {
+    if (this.activityStats.hasOwnProperty(statName)) {
+        this.activityStats[statName] += value;
+        return this.save();
+    }
+    throw new Error(`Invalid stat name: ${statName}`);
 };
 
 export const User = mongoose.models.User || mongoose.model('User', userSchema);
