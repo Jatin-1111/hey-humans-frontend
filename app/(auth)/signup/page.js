@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Eye, EyeOff, Mail, Lock, User, Phone, MapPin, AlertCircle, CheckCircle, Sparkles, Briefcase } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function SignupPage() {
     const [formData, setFormData] = useState({
@@ -18,6 +19,7 @@ export default function SignupPage() {
     const [errors, setErrors] = useState([]);
     const [success, setSuccess] = useState('');
     const router = useRouter();
+    const { login } = useAuth();
 
     const handleChange = (e) => {
         const { name, type, checked, value } = e.target;
@@ -37,41 +39,28 @@ export default function SignupPage() {
         try {
             const response = await fetch('/api/auth/signup', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                setSuccess('Account created successfully! Check your email for verification.');
+                setSuccess('Account created successfully!');
 
-                // Store token if provided (for immediate login)
+                // ONLY use the token if provided
                 if (data.token) {
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('user', JSON.stringify(data.user));
+                    login(data.token); // Pass only token
                 }
 
-                // Redirect after delay
                 setTimeout(() => {
-                    if (data.requiresVerification) {
-                        router.push('/verify-email');
-                    } else {
-                        router.push('/dashboard');
-                    }
+                    router.push(data.requiresVerification ? '/verify-email' : '/dashboard');
                 }, 2000);
             } else {
-                if (data.details && Array.isArray(data.details)) {
-                    setErrors(data.details);
-                } else {
-                    setErrors([data.error || 'Signup failed']);
-                }
+                setErrors(data.details || [data.error]);
             }
         } catch (err) {
             setErrors(['Network error. Please try again.']);
-            console.error('Signup error:', err);
         } finally {
             setLoading(false);
         }

@@ -143,10 +143,10 @@ function DashboardContent() {
                                         <div className="flex items-center justify-between">
                                             <span className="text-sm text-gray-400">Availability</span>
                                             <span className={`text-sm px-2 py-1 rounded-full text-xs ${user.freelancerProfile.availability === 'available'
-                                                    ? 'bg-green-600 text-white'
-                                                    : user.freelancerProfile.availability === 'busy'
-                                                        ? 'bg-yellow-600 text-white'
-                                                        : 'bg-red-600 text-white'
+                                                ? 'bg-green-600 text-white'
+                                                : user.freelancerProfile.availability === 'busy'
+                                                    ? 'bg-yellow-600 text-white'
+                                                    : 'bg-red-600 text-white'
                                                 }`}>
                                                 {user.freelancerProfile.availability}
                                             </span>

@@ -51,12 +51,36 @@ export async function POST(req) {
         // Generate JWT with enhanced payload
         const token = jwt.sign(
             {
+                // Core user data
                 userId: user._id,
                 email: user.email,
+                name: user.name,
                 role: user.role,
+                phone: user.phone,
+                address: user.address,
+
+                // Status flags  
                 verified: user.isVerified,
+                profileCompletion: user.profileCompletion,
+
+                // Freelancer data
                 canFreelance: user.freelancerProfile?.isFreelancer || false,
-                profileCompleted: user.freelancerProfile?.profileCompleted || false
+                freelancerProfile: user.freelancerProfile?.isFreelancer ? {
+                    skills: user.freelancerProfile.skills,
+                    hourlyRate: user.freelancerProfile.hourlyRate,
+                    bio: user.freelancerProfile.bio,
+                    rating: user.freelancerProfile.rating,
+                    availability: user.freelancerProfile.availability,
+                    profileCompleted: user.freelancerProfile.profileCompleted,
+                    completedProjects: user.freelancerProfile.completedProjects
+                } : null,
+
+                // Activity stats
+                activityStats: user.activityStats,
+
+                // Timestamps
+                createdAt: user.createdAt,
+                lastLogin: user.lastLogin
             },
             process.env.JWT_SECRET,
             { expiresIn: '7d' }
@@ -66,37 +90,6 @@ export async function POST(req) {
         user.lastLogin = new Date();
         user.updatedAt = new Date();
         await user.save();
-
-        // Enhanced user response data
-        const userData = {
-            id: user._id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            phone: user.phone,
-            address: user.address,
-            isVerified: user.isVerified,
-            createdAt: user.createdAt,
-            lastLogin: user.lastLogin,
-
-            // Freelancer capabilities
-            canFreelance: user.freelancerProfile?.isFreelancer || false,
-            freelancerProfile: user.freelancerProfile?.isFreelancer ? {
-                skills: user.freelancerProfile.skills,
-                hourlyRate: user.freelancerProfile.hourlyRate,
-                bio: user.freelancerProfile.bio,
-                rating: user.freelancerProfile.rating,
-                availability: user.freelancerProfile.availability,
-                profileCompleted: user.freelancerProfile.profileCompleted,
-                completedProjects: user.freelancerProfile.completedProjects
-            } : null,
-
-            // Activity stats
-            activityStats: user.activityStats,
-
-            // Profile completion
-            profileCompletion: user.profileCompletion
-        };
 
         // Determine next steps for user guidance
         const nextSteps = {
@@ -111,7 +104,6 @@ export async function POST(req) {
             {
                 message: 'Login successful',
                 token,
-                user: userData,
                 nextSteps,
 
                 // Dashboard insights

@@ -1,7 +1,7 @@
-// hooks/useAuth.js
 "use client";
 import { useState, useEffect, createContext, useContext } from 'react';
 import { useRouter } from 'next/navigation';
+// Remove: import jwt from 'jsonwebtoken'; ❌
 
 const AuthContext = createContext();
 
@@ -10,146 +10,105 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
+    // ✅ FIXED: Manual JWT decode (browser-safe)
+    const decodeToken = (token) => {
+        try {
+            // Split JWT into parts
+            const parts = token.split('.');
+            if (parts.length !== 3) {
+                return null;
+            }
+
+            // Decode payload (middle part)
+            const payload = parts[1];
+
+            // Add padding if needed
+            const paddedPayload = payload + '='.repeat((4 - payload.length % 4) % 4);
+
+            // Decode base64
+            const decoded = JSON.parse(atob(paddedPayload));
+
+            // Check expiration
+            if (decoded.exp && decoded.exp < Date.now() / 1000) {
+                console.log('Token expired');
+                return null;
+            }
+
+            // Return user data from token
+            return {
+                id: decoded.userId,
+                name: decoded.name,
+                email: decoded.email,
+                role: decoded.role,
+                phone: decoded.phone,
+                address: decoded.address,
+                isVerified: decoded.verified,
+                createdAt: decoded.createdAt,
+                lastLogin: decoded.lastLogin,
+                canFreelance: decoded.canFreelance,
+                freelancerProfile: decoded.freelancerProfile,
+                activityStats: decoded.activityStats,
+                profileCompletion: decoded.profileCompletion
+            };
+        } catch (error) {
+            console.error('Token decode error:', error);
+            return null;
+        }
+    };
+
     useEffect(() => {
         checkAuth();
     }, []);
 
-    const checkAuth = async () => {
+    const checkAuth = () => {
+        setLoading(true);
+
         try {
             const token = localStorage.getItem('token');
+
             if (!token) {
+                console.log('No token found');
+                setUser(null);
                 setLoading(false);
                 return;
             }
 
-            const response = await fetch('/api/auth/me', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            const userData = decodeToken(token);
 
-            if (response.ok) {
-                const data = await response.json();
-                setUser(data.user);
+            if (userData) {
+                console.log('✅ User authenticated:', userData.email);
+                setUser(userData);
             } else {
-                // Token is invalid
+                console.log('❌ Invalid/expired token');
                 localStorage.removeItem('token');
-                localStorage.removeItem('user');
+                setUser(null);
             }
         } catch (error) {
             console.error('Auth check failed:', error);
             localStorage.removeItem('token');
-            localStorage.removeItem('user');
+            setUser(null);
         } finally {
             setLoading(false);
         }
     };
 
-    const login = (token, userData) => {
+    const login = (token) => {
+        console.log('🔐 Logging in with token');
         localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(userData));
-        setUser(userData);
+        const userData = decodeToken(token);
+        if (userData) {
+            setUser(userData);
+            console.log('✅ Login successful:', userData.email);
+        } else {
+            console.error('❌ Invalid token received');
+        }
     };
 
     const logout = () => {
+        console.log('🚪 Logging out');
         localStorage.removeItem('token');
-        localStorage.removeItem('user');
         setUser(null);
         router.push('/');
-    };
-
-    // NEW: Update user data without full re-auth
-    const updateUser = (updatedUserData) => {
-        const newUserData = { ...user, ...updatedUserData };
-        setUser(newUserData);
-        localStorage.setItem('user', JSON.stringify(newUserData));
-    };
-
-    // NEW: Enable freelancer mode
-    const enableFreelancerMode = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('/api/auth/me', {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    freelancerProfile: {
-                        isFreelancer: true
-                    }
-                })
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                updateUser(data.user);
-                return { success: true };
-            } else {
-                const error = await response.json();
-                return { success: false, error: error.error };
-            }
-        } catch (error) {
-            console.error('Enable freelancer mode failed:', error);
-            return { success: false, error: 'Network error' };
-        }
-    };
-
-    // NEW: Update freelancer profile
-    const updateFreelancerProfile = async (profileData) => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('/api/auth/me', {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    freelancerProfile: profileData
-                })
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                updateUser(data.user);
-                return { success: true, user: data.user };
-            } else {
-                const error = await response.json();
-                return { success: false, error: error.error };
-            }
-        } catch (error) {
-            console.error('Update freelancer profile failed:', error);
-            return { success: false, error: 'Network error' };
-        }
-    };
-
-    // NEW: Update basic profile
-    const updateProfile = async (profileData) => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('/api/auth/me', {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(profileData)
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                updateUser(data.user);
-                return { success: true, user: data.user };
-            } else {
-                const error = await response.json();
-                return { success: false, error: error.error };
-            }
-        } catch (error) {
-            console.error('Update profile failed:', error);
-            return { success: false, error: 'Network error' };
-        }
     };
 
     const value = {
@@ -157,24 +116,10 @@ export function AuthProvider({ children }) {
         loading,
         login,
         logout,
-        updateUser,
-        updateProfile,
-        enableFreelancerMode,
-        updateFreelancerProfile,
-
-        // Enhanced user state checks
         isAuthenticated: !!user,
         isAdmin: user?.role === 'admin',
         canFreelance: user?.canFreelance || false,
-        isFreelancerProfileComplete: user?.freelancerProfile?.profileCompleted || false,
         profileCompletion: user?.profileCompletion || 0,
-
-        // User capabilities
-        canPostProjects: !!user, // Any user can post projects
-        canBidOnProjects: user?.canFreelance || false,
-        canShopMarketplace: !!user, // Any user can shop
-
-        // User activity stats
         activityStats: user?.activityStats || {
             projectsPosted: 0,
             projectsCompleted: 0,

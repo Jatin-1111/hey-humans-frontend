@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Eye, EyeOff, Mail, Lock, AlertCircle, CheckCircle, Sparkles } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function LoginPage() {
     const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ export default function LoginPage() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const router = useRouter();
+    const { login } = useAuth();
 
     const handleChange = (e) => {
         setFormData({
@@ -32,22 +34,16 @@ export default function LoginPage() {
         try {
             const response = await fetch('/api/auth/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                // Store token
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('user', JSON.stringify(data.user));
+                login(data.token);
 
                 setSuccess('Login successful! Redirecting...');
-
-                // Redirect after short delay
                 setTimeout(() => {
                     router.push('/dashboard');
                 }, 1000);
@@ -56,7 +52,6 @@ export default function LoginPage() {
             }
         } catch (err) {
             setError('Network error. Please try again.');
-            console.error('Login error:', err);
         } finally {
             setLoading(false);
         }
