@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Eye, EyeOff, Mail, Lock, User, Phone, MapPin, AlertCircle, CheckCircle, Sparkles } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, User, Phone, MapPin, AlertCircle, CheckCircle, Sparkles, Briefcase } from 'lucide-react';
 
 export default function SignupPage() {
     const [formData, setFormData] = useState({
@@ -10,7 +10,8 @@ export default function SignupPage() {
         email: '',
         password: '',
         phone: '',
-        address: ''
+        address: '',
+        interestedInFreelancing: false
     });
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -19,9 +20,10 @@ export default function SignupPage() {
     const router = useRouter();
 
     const handleChange = (e) => {
+        const { name, type, checked, value } = e.target;
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [name]: type === 'checkbox' ? checked : value
         });
         // Clear errors when user starts typing
         if (errors.length > 0) setErrors([]);
@@ -85,7 +87,7 @@ export default function SignupPage() {
                         <span className="text-2xl font-bold font-space">Hey Humanz</span>
                     </Link>
                     <h2 className="text-3xl font-bold text-white font-outfit">Create your account</h2>
-                    <p className="mt-2 text-gray-400 font-inter">Join the creative community</p>
+                    <p className="mt-2 text-gray-400 font-inter">Join the unified creative platform</p>
                 </div>
 
                 {/* Form */}
@@ -212,6 +214,35 @@ export default function SignupPage() {
                         </div>
                     </div>
 
+                    {/* NEW: Freelancer Interest */}
+                    <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
+                        <div className="flex items-start space-x-3">
+                            <div className="flex-shrink-0 pt-0.5">
+                                <input
+                                    id="interestedInFreelancing"
+                                    name="interestedInFreelancing"
+                                    type="checkbox"
+                                    checked={formData.interestedInFreelancing}
+                                    onChange={handleChange}
+                                    className="w-4 h-4 text-blue-600 bg-gray-800 border-gray-600 rounded focus:ring-blue-500 focus:ring-2"
+                                />
+                            </div>
+                            <div className="flex-1">
+                                <label htmlFor="interestedInFreelancing" className="flex items-center cursor-pointer">
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <Briefcase className="w-4 h-4 text-blue-400" />
+                                        <span className="text-sm font-medium text-blue-400 font-outfit">
+                                            I want to offer freelancing services
+                                        </span>
+                                    </div>
+                                </label>
+                                <p className="text-xs text-gray-400 font-inter">
+                                    Enable freelancer mode to start offering video editing, motion graphics, and other creative services
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* Error Messages */}
                     {errors.length > 0 && (
                         <div className="bg-red-400/10 border border-red-400/20 rounded-lg p-4">
@@ -264,6 +295,20 @@ export default function SignupPage() {
                         </Link>
                     </div>
                 </form>
+
+                {/* Feature Preview */}
+                {formData.interestedInFreelancing && (
+                    <div className="bg-gray-900 border border-gray-700 rounded-lg p-4 mt-6">
+                        <h3 className="text-white font-medium mb-2 font-outfit">What you&apos;ll be able to do:</h3>
+                        <ul className="space-y-1 text-sm text-gray-300 font-inter">
+                            <li>• Browse and bid on video editing projects</li>
+                            <li>• Showcase your portfolio to potential clients</li>
+                            <li>• Set your own hourly rates</li>
+                            <li>• Build your reputation with reviews</li>
+                            <li>• Plus: Shop LED displays and place orders</li>
+                        </ul>
+                    </div>
+                )}
             </div>
         </div>
     );

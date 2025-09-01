@@ -7,7 +7,7 @@ import { User } from '@/models/User';
 import { rateLimit } from '@/lib/rateLimit';
 import { sendVerificationEmail } from '@/lib/email';
 
-// Input validation schemas
+// Input validation schemas (same as before but with optional freelancer fields)
 const validateInput = (data) => {
     const errors = [];
 
@@ -22,7 +22,7 @@ const validateInput = (data) => {
         errors.push('Name can only contain letters, spaces, hyphens, and apostrophes');
     }
 
-    // Email validation
+    // Email validation (same as before)
     if (!data.email || typeof data.email !== 'string') {
         errors.push('Email is required and must be a string');
     } else {
@@ -35,7 +35,6 @@ const validateInput = (data) => {
             errors.push('Email address is too long');
         }
 
-        // Check for disposable email domains
         const disposableEmailDomains = [
             '10minutemail.com', 'guerrillamail.com', 'mailinator.com',
             'tempmail.org', 'yopmail.com', 'throwaway.email'
@@ -46,7 +45,7 @@ const validateInput = (data) => {
         }
     }
 
-    // Password validation
+    // Password validation (same as before)
     if (!data.password || typeof data.password !== 'string') {
         errors.push('Password is required and must be a string');
     } else {
@@ -58,7 +57,6 @@ const validateInput = (data) => {
             errors.push('Password cannot exceed 128 characters');
         }
 
-        // Password strength checks
         if (!/(?=.*[a-z])/.test(password)) {
             errors.push('Password must contain at least one lowercase letter');
         }
@@ -72,7 +70,6 @@ const validateInput = (data) => {
             errors.push('Password must contain at least one special character');
         }
 
-        // Check for common weak passwords
         const weakPasswords = [
             'password', '12345678', 'qwerty123', 'admin123', 'letmein123',
             'welcome123', 'password123', '123456789', 'qwertyuiop'
@@ -82,21 +79,17 @@ const validateInput = (data) => {
         }
     }
 
-    // Phone validation (optional but if provided must be valid)
+    // Phone validation (same as before)
     if (data.phone !== undefined && data.phone !== null && data.phone !== '') {
         const phone = String(data.phone).trim();
-
         if (phone) {
-            // Remove all non-digit characters for validation
             const phoneDigits = phone.replace(/\D/g, '');
-
             if (phoneDigits.length < 10) {
                 errors.push('Phone number must be at least 10 digits');
             } else if (phoneDigits.length > 15) {
                 errors.push('Phone number cannot exceed 15 digits');
             }
 
-            // Basic phone format validation
             const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
             if (!phoneRegex.test(phoneDigits)) {
                 errors.push('Invalid phone number format');
@@ -104,21 +97,22 @@ const validateInput = (data) => {
         }
     }
 
-    // Address validation (optional)
+    // Address validation (same as before)
     if (data.address !== undefined && data.address !== null && data.address !== '') {
         const address = String(data.address).trim();
-
         if (address && address.length > 500) {
             errors.push('Address cannot exceed 500 characters');
         }
     }
 
-    // Role validation
-    if (data.role !== undefined) {
-        if (!['user', 'admin'].includes(data.role)) {
-            errors.push('Invalid role. Must be either "user" or "admin"');
-        }
+    // NEW: Freelancer interest validation (optional)
+    let interestedInFreelancing = false;
+    if (data.interestedInFreelancing !== undefined) {
+        interestedInFreelancing = Boolean(data.interestedInFreelancing);
     }
+
+    // Role validation - force 'user' for new signups
+    const role = 'user'; // Only users can sign up, admins are created manually
 
     return {
         isValid: errors.length === 0,
@@ -129,12 +123,13 @@ const validateInput = (data) => {
             password: data.password || '',
             phone: data.phone ? String(data.phone).trim() : '',
             address: data.address ? String(data.address).trim() : '',
-            role: ['user', 'admin'].includes(data.role) ? data.role : 'user'
+            role,
+            interestedInFreelancing
         }
     };
 };
 
-// Generate verification token
+// Generate verification token (same as before)
 const generateVerificationToken = (email) => {
     return jwt.sign(
         {
@@ -147,7 +142,7 @@ const generateVerificationToken = (email) => {
     );
 };
 
-// Check for existing user
+// Check for existing user (same as before)
 const checkExistingUser = async (email) => {
     try {
         await connectDB();
@@ -160,7 +155,7 @@ const checkExistingUser = async (email) => {
     }
 };
 
-// Create user in database
+// Create user in database - UPDATED
 const createUser = async (userData, hashedPassword, verificationToken) => {
     try {
         const user = new User({
@@ -173,6 +168,29 @@ const createUser = async (userData, hashedPassword, verificationToken) => {
             isVerified: false,
             verificationToken,
             isActive: true,
+
+            // NEW: Initialize freelancer profile if interested
+            freelancerProfile: {
+                isFreelancer: userData.interestedInFreelancing || false,
+                skills: [],
+                portfolio: [],
+                hourlyRate: 0,
+                bio: '',
+                completedProjects: 0,
+                rating: { average: 0, count: 0 },
+                availability: 'available',
+                profileCompleted: false
+            },
+
+            // NEW: Initialize activity stats
+            activityStats: {
+                projectsPosted: 0,
+                projectsCompleted: 0,
+                ordersPlaced: 0,
+                totalSpent: 0,
+                totalEarned: 0
+            },
+
             createdAt: new Date(),
             updatedAt: new Date()
         });
@@ -182,12 +200,10 @@ const createUser = async (userData, hashedPassword, verificationToken) => {
     } catch (error) {
         console.error('User creation error:', error);
 
-        // Handle duplicate key errors
         if (error.code === 11000) {
             throw new Error('User already exists with this email');
         }
 
-        // Handle validation errors
         if (error.name === 'ValidationError') {
             const validationErrors = Object.values(error.errors).map(e => e.message);
             throw new Error(`Validation failed: ${validationErrors.join(', ')}`);
@@ -197,16 +213,16 @@ const createUser = async (userData, hashedPassword, verificationToken) => {
     }
 };
 
-// Main signup route handler
+// Main signup route handler - ENHANCED
 export async function POST(req) {
     const startTime = Date.now();
     console.log('🚀 Signup request started at:', new Date().toISOString());
 
     try {
-        // Rate limiting check
+        // Rate limiting check (same as before)
         const rateLimitResult = await rateLimit(req, {
             maxRequests: 5,
-            windowMs: 15 * 60 * 1000, // 15 minutes
+            windowMs: 15 * 60 * 1000,
             message: 'Too many signup attempts. Please try again later.'
         });
 
@@ -252,7 +268,7 @@ export async function POST(req) {
             );
         }
 
-        const { name, email, password, phone, address, role } = validation.sanitizedData;
+        const { name, email, password, phone, address, role, interestedInFreelancing } = validation.sanitizedData;
 
         // Check if user already exists
         console.log('🔍 Checking for existing user...');
@@ -260,8 +276,6 @@ export async function POST(req) {
 
         if (existingUser) {
             console.warn('⚠️ User already exists:', email);
-
-            // Don't reveal if user is verified or not for security
             return NextResponse.json(
                 {
                     error: 'An account with this email already exists',
@@ -271,7 +285,7 @@ export async function POST(req) {
             );
         }
 
-        // Hash password with high cost factor
+        // Hash password
         console.log('🔐 Hashing password...');
         const saltRounds = process.env.NODE_ENV === 'production' ? 14 : 12;
         const salt = await bcrypt.genSalt(saltRounds);
@@ -283,34 +297,33 @@ export async function POST(req) {
         // Create user in database
         console.log('👤 Creating user account...');
         const newUser = await createUser(
-            { name, email, phone, address, role },
+            { name, email, phone, address, role, interestedInFreelancing },
             hashedPassword,
             verificationToken
         );
 
-        // Send verification email (commented out for now)
-
+        // Send verification email
         try {
             await sendVerificationEmail(email, verificationToken, name);
             console.log('📧 Verification email sent successfully');
         } catch (emailError) {
             console.error('📧 Email sending failed:', emailError.message);
-            // Don't fail registration if email fails
         }
 
-        // Generate auth token for immediate login (optional)
+        // Generate auth token for immediate login
         const authToken = jwt.sign(
             {
                 userId: newUser._id,
                 email: newUser.email,
                 role: newUser.role,
-                verified: newUser.isVerified
+                verified: newUser.isVerified,
+                canFreelance: newUser.freelancerProfile?.isFreelancer || false
             },
             process.env.JWT_SECRET,
             { expiresIn: '7d' }
         );
 
-        // Prepare response data
+        // Prepare response data - ENHANCED
         const responseData = {
             success: true,
             message: 'Account created successfully! Please check your email for verification.',
@@ -322,11 +335,20 @@ export async function POST(req) {
                 phone: newUser.phone,
                 address: newUser.address,
                 isVerified: newUser.isVerified,
+                canFreelance: newUser.freelancerProfile?.isFreelancer || false,
+                profileCompletion: newUser.profileCompletion,
                 createdAt: newUser.createdAt
             },
-            token: authToken, // Include for immediate login
+            token: authToken,
             requiresVerification: !newUser.isVerified,
-            verificationSent: true // Change to false if email fails
+            verificationSent: true,
+
+            // NEW: Onboarding guidance
+            nextSteps: {
+                emailVerification: !newUser.isVerified,
+                profileCompletion: newUser.profileCompletion < 100,
+                freelancerSetup: newUser.freelancerProfile?.isFreelancer && !newUser.freelancerProfile?.profileCompleted
+            }
         };
 
         const processingTime = Date.now() - startTime;
@@ -342,7 +364,6 @@ export async function POST(req) {
             timestamp: new Date().toISOString()
         });
 
-        // Don't expose internal errors in production
         const errorMessage = process.env.NODE_ENV === 'production'
             ? 'Internal server error. Please try again later.'
             : error.message;
@@ -361,12 +382,12 @@ export async function POST(req) {
     }
 }
 
-// GET method for endpoint information
+// GET method for endpoint information - UPDATED
 export async function GET() {
     return NextResponse.json({
         endpoint: '/api/auth/signup',
         method: 'POST',
-        description: 'Create a new user account',
+        description: 'Create a new user account with optional freelancer setup',
         requiredFields: {
             name: 'string (2-100 chars, letters only)',
             email: 'string (valid email format)',
@@ -375,7 +396,7 @@ export async function GET() {
         optionalFields: {
             phone: 'string (10-15 digits)',
             address: 'string (max 500 chars)',
-            role: 'string ("user" or "admin", defaults to "user")'
+            interestedInFreelancing: 'boolean (enables freelancer mode)'
         },
         responses: {
             201: 'User created successfully',
@@ -384,14 +405,11 @@ export async function GET() {
             429: 'Rate limit exceeded',
             500: 'Internal server error'
         },
-        rateLimit: '5 requests per 15 minutes',
-        passwordRequirements: [
-            'At least 8 characters long',
-            'At least one uppercase letter',
-            'At least one lowercase letter',
-            'At least one number',
-            'At least one special character',
-            'Not a common weak password'
-        ]
+        features: {
+            rateLimit: '5 requests per 15 minutes',
+            emailVerification: 'Required for account activation',
+            freelancerMode: 'Optional setup during registration',
+            profileTracking: 'Completion percentage calculated'
+        }
     });
 }
