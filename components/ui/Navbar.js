@@ -2,13 +2,15 @@
 import React, { useState, useEffect } from "react";
 import { MenuItem, Menu, ProductItem, HoveredLink } from "@/components/ui/NavbarMenu";
 import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "motion/react";
-import { X, Play, Monitor, Calendar, ShoppingCart, ChevronDown, ArrowRight, Sparkles, Menu as MenuIcon, User, LogIn, Phone, Mail, MessageCircle, MapPin } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, Play, Monitor, Calendar, ShoppingCart, ChevronDown, ArrowRight, Sparkles, Menu as MenuIcon, User, LogIn, Phone, Mail, MessageCircle, MapPin, LogOut, Shield, Settings } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = ({ className }) => {
     const [active, setActive] = useState(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [expandedSection, setExpandedSection] = useState(null);
+    const { user, loading, isAuthenticated, logout, isAdmin, canFreelance } = useAuth();
 
     // Prevent body scroll when mobile menu is open
     useEffect(() => {
@@ -34,15 +36,15 @@ const Navbar = ({ className }) => {
     const menuSections = [
         {
             id: 'services',
-            title: 'Video Services',
+            title: 'Services',
             icon: <Play size={20} />,
             color: 'blue',
-            description: 'Professional video editing & creation',
+            description: 'Digital content & creative services',
             items: [
-                { title: 'Video Editing', href: '/video-editing', desc: 'Professional cuts & transitions' },
-                { title: 'Motion Graphics', href: '/motion-graphics', desc: 'Animations & visual effects' },
-                { title: 'Color Grading', href: '/color-grading', desc: 'Professional color correction' },
-                { title: 'Audio Post', href: '/audio-post', desc: 'Sound design & mixing' }
+                { title: 'Video Editing', href: '/video-editing', desc: 'Professional cuts & transitions', badge: 'Coming Soon' },
+                { title: 'Motion Graphics', href: '/motion-graphics', desc: 'Animations & visual effects', badge: 'Coming Soon' },
+                { title: 'Color Grading', href: '/color-grading', desc: 'Professional color correction', badge: 'Coming Soon' },
+                { title: 'Audio Post', href: '/audio-post', desc: 'Sound design & mixing', badge: 'Coming Soon' }
             ]
         },
         {
@@ -78,7 +80,8 @@ const Navbar = ({ className }) => {
             color: 'yellow',
             description: 'Browse everything in one place',
             items: [
-                { title: 'Browse All', href: '/marketplace', desc: 'Complete marketplace view', featured: true }
+                { title: 'LED Products', href: '/products', desc: 'Browse LED displays', featured: true },
+                { title: 'Shopping Cart', href: '/cart', desc: 'Review your items' }
             ]
         },
         {
@@ -96,11 +99,16 @@ const Navbar = ({ className }) => {
         },
         {
             id: 'account',
-            title: 'Account',
+            title: isAuthenticated ? 'My Account' : 'Account',
             icon: <User size={20} />,
             color: 'indigo',
-            description: 'Sign in or create account',
-            items: [
+            description: isAuthenticated ? `Welcome back, ${user?.name?.split(' ')[0]}!` : 'Sign in or create account',
+            items: isAuthenticated ? [
+                { title: 'Dashboard', href: '/dashboard', desc: 'Manage your account' },
+                ...(isAdmin ? [{ title: 'Admin Panel', href: '/admin', desc: 'Platform management', badge: 'Admin' }] : []),
+                { title: 'Settings', href: '/settings', desc: 'Account preferences' },
+                { title: 'Logout', href: '#', desc: 'Sign out of your account', action: 'logout' }
+            ] : [
                 { title: 'Login', href: '/login', desc: 'Access your account' },
                 { title: 'Sign Up', href: '/signup', desc: 'Create a new account', badge: 'Free' }
             ]
@@ -126,10 +134,22 @@ const Navbar = ({ className }) => {
                 <Menu setActive={setActive}>
                     <MenuItem setActive={setActive} active={active} item="Services">
                         <div className="flex flex-col space-y-4 text-sm">
-                            <HoveredLink href="/video-editing">Video Editing</HoveredLink>
-                            <HoveredLink href="/motion-graphics">Motion Graphics</HoveredLink>
-                            <HoveredLink href="/color-grading">Color Grading</HoveredLink>
-                            <HoveredLink href="/audio-post">Audio Post-Production</HoveredLink>
+                            <div className="flex items-center justify-between">
+                                <HoveredLink href="/video-editing">Video Editing</HoveredLink>
+                                <span className="px-2 py-1 bg-yellow-100 dark:bg-yellow-800 text-yellow-700 dark:text-yellow-300 text-xs rounded-full font-geist font-medium">Coming Soon</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <HoveredLink href="/motion-graphics">Motion Graphics</HoveredLink>
+                                <span className="px-2 py-1 bg-yellow-100 dark:bg-yellow-800 text-yellow-700 dark:text-yellow-300 text-xs rounded-full font-geist font-medium">Coming Soon</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <HoveredLink href="/color-grading">Color Grading</HoveredLink>
+                                <span className="px-2 py-1 bg-yellow-100 dark:bg-yellow-800 text-yellow-700 dark:text-yellow-300 text-xs rounded-full font-geist font-medium">Coming Soon</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <HoveredLink href="/audio-post">Audio Post-Production</HoveredLink>
+                                <span className="px-2 py-1 bg-yellow-100 dark:bg-yellow-800 text-yellow-700 dark:text-yellow-300 text-xs rounded-full font-geist font-medium">Coming Soon</span>
+                            </div>
                         </div>
                     </MenuItem>
 
@@ -174,10 +194,16 @@ const Navbar = ({ className }) => {
                     <MenuItem setActive={setActive} active={active} item="Marketplace">
                         <div className="text-sm grid grid-cols-1 gap-10 p-4">
                             <ProductItem
-                                title="Browse All"
-                                href="/marketplace"
+                                title="LED Products"
+                                href="/products"
                                 src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=300&h=200&fit=crop"
-                                description="Explore our complete marketplace of services and displays"
+                                description="Browse our complete catalog of LED displays"
+                            />
+                            <ProductItem
+                                title="Shopping Cart"
+                                href="/cart"
+                                src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=300&h=200&fit=crop"
+                                description="Review your selected items and checkout"
                             />
                         </div>
                     </MenuItem>
@@ -226,29 +252,116 @@ const Navbar = ({ className }) => {
                     <MenuItem setActive={setActive} active={active} item="Account">
                         <div className="text-sm grid grid-cols-1 gap-4 p-4 min-w-[280px]">
                             <div className="space-y-4">
-                                <a
-                                    href="/login"
-                                    className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                                >
-                                    <LogIn className="text-blue-500" size={20} />
-                                    <div>
-                                        <h4 className="font-bold text-black dark:text-white font-outfit">Login</h4>
-                                        <p className="text-neutral-700 dark:text-neutral-300 text-xs font-inter">Access your account</p>
-                                    </div>
-                                </a>
-                                <a
-                                    href="/signup"
-                                    className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border border-green-500/20 bg-green-50/50 dark:bg-green-900/20"
-                                >
-                                    <User className="text-green-500" size={20} />
-                                    <div className="flex-1">
-                                        <div className="flex items-center space-x-2">
-                                            <h4 className="font-bold text-black dark:text-white font-outfit">Sign Up</h4>
-                                            <span className="px-2 py-1 bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300 text-xs rounded-full font-geist font-medium">Free</span>
-                                        </div>
-                                        <p className="text-neutral-700 dark:text-neutral-300 text-xs font-inter">Create a new account</p>
-                                    </div>
-                                </a>
+                                {!loading && (
+                                    <>
+                                        {isAuthenticated ? (
+                                            <>
+                                                {/* Authenticated User Menu */}
+                                                <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg border">
+                                                    <div className="flex items-center space-x-3">
+                                                        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                                                            <User className="text-white" size={16} />
+                                                        </div>
+                                                        <div>
+                                                            <h4 className="font-bold text-black dark:text-white font-outfit text-sm">
+                                                                {user?.name}
+                                                            </h4>
+                                                            <p className="text-neutral-700 dark:text-neutral-300 text-xs font-inter">
+                                                                {user?.email}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-center gap-1 mt-2">
+                                                        <span className={`px-2 py-0.5 text-xs rounded-full ${isAdmin
+                                                            ? 'bg-purple-100 dark:bg-purple-800 text-purple-700 dark:text-purple-300'
+                                                            : 'bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-300'
+                                                            }`}>
+                                                            {user?.role}
+                                                        </span>
+                                                        {canFreelance && (
+                                                            <span className="px-2 py-0.5 text-xs rounded-full bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300">
+                                                                Freelancer
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
+
+                                                <a
+                                                    href="/dashboard"
+                                                    className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                                                >
+                                                    <User className="text-blue-500" size={20} />
+                                                    <div>
+                                                        <h4 className="font-bold text-black dark:text-white font-outfit">Dashboard</h4>
+                                                        <p className="text-neutral-700 dark:text-neutral-300 text-xs font-inter">Manage your account</p>
+                                                    </div>
+                                                </a>
+
+                                                {isAdmin && (
+                                                    <a
+                                                        href="/admin"
+                                                        className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border border-purple-500/20 bg-purple-50/50 dark:bg-purple-900/20"
+                                                    >
+                                                        <Shield className="text-purple-500" size={20} />
+                                                        <div>
+                                                            <h4 className="font-bold text-black dark:text-white font-outfit">Admin Panel</h4>
+                                                            <p className="text-neutral-700 dark:text-neutral-300 text-xs font-inter">Platform management</p>
+                                                        </div>
+                                                    </a>
+                                                )}
+
+                                                <a
+                                                    href="/settings"
+                                                    className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                                                >
+                                                    <Settings className="text-gray-500" size={20} />
+                                                    <div>
+                                                        <h4 className="font-bold text-black dark:text-white font-outfit">Settings</h4>
+                                                        <p className="text-neutral-700 dark:text-neutral-300 text-xs font-inter">Account preferences</p>
+                                                    </div>
+                                                </a>
+
+                                                <button
+                                                    onClick={logout}
+                                                    className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/20 transition-colors text-red-600 dark:text-red-400"
+                                                >
+                                                    <LogOut size={20} />
+                                                    <div className="text-left">
+                                                        <h4 className="font-bold font-outfit">Logout</h4>
+                                                        <p className="text-xs opacity-75 font-inter">Sign out of your account</p>
+                                                    </div>
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                {/* Guest User Menu */}
+                                                <a
+                                                    href="/login"
+                                                    className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                                                >
+                                                    <LogIn className="text-blue-500" size={20} />
+                                                    <div>
+                                                        <h4 className="font-bold text-black dark:text-white font-outfit">Login</h4>
+                                                        <p className="text-neutral-700 dark:text-neutral-300 text-xs font-inter">Access your account</p>
+                                                    </div>
+                                                </a>
+                                                <a
+                                                    href="/signup"
+                                                    className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border border-green-500/20 bg-green-50/50 dark:bg-green-900/20"
+                                                >
+                                                    <User className="text-green-500" size={20} />
+                                                    <div className="flex-1">
+                                                        <div className="flex items-center space-x-2">
+                                                            <h4 className="font-bold text-black dark:text-white font-outfit">Sign Up</h4>
+                                                            <span className="px-2 py-1 bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300 text-xs rounded-full font-geist font-medium">Free</span>
+                                                        </div>
+                                                        <p className="text-neutral-700 dark:text-neutral-300 text-xs font-inter">Create a new account</p>
+                                                    </div>
+                                                </a>
+                                            </>
+                                        )}
+                                    </>
+                                )}
                             </div>
                         </div>
                     </MenuItem>
@@ -359,7 +472,13 @@ const Navbar = ({ className }) => {
                                                             <motion.a
                                                                 key={item.title}
                                                                 href={item.href}
-                                                                onClick={closeMobileMenu}
+                                                                onClick={(e) => {
+                                                                    if (item.action === 'logout') {
+                                                                        e.preventDefault();
+                                                                        logout();
+                                                                    }
+                                                                    closeMobileMenu();
+                                                                }}
                                                                 className="flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition-colors group"
                                                                 initial={{ opacity: 0, x: 20 }}
                                                                 animate={{ opacity: 1, x: 0 }}
@@ -373,7 +492,10 @@ const Navbar = ({ className }) => {
                                                                             {item.title}
                                                                         </h4>
                                                                         {item.badge && (
-                                                                            <span className="px-2 py-1 bg-blue-400/20 text-blue-400 text-xs rounded-full font-geist font-medium">
+                                                                            <span className={`px-2 py-1 text-xs rounded-full font-geist font-medium ${item.badge === 'Admin'
+                                                                                ? 'bg-purple-400/20 text-purple-400'
+                                                                                : 'bg-blue-400/20 text-blue-400'
+                                                                                }`}>
                                                                                 {item.badge}
                                                                             </span>
                                                                         )}
@@ -398,6 +520,39 @@ const Navbar = ({ className }) => {
                                     </motion.div>
                                 ))}
 
+                                {/* User Status Section for Mobile */}
+                                {!loading && isAuthenticated && (
+                                    <motion.div
+                                        className="border border-white/10 rounded-2xl bg-white/5 backdrop-blur-sm p-6"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.3 }}
+                                    >
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                                                <User className="text-white" size={20} />
+                                            </div>
+                                            <div>
+                                                <h3 className="text-white font-semibold font-outfit">{user?.name}</h3>
+                                                <p className="text-gray-400 text-sm font-inter">{user?.email}</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <span className={`px-2 py-1 text-xs rounded-full ${isAdmin
+                                                ? 'bg-purple-400/20 text-purple-400'
+                                                : 'bg-blue-400/20 text-blue-400'
+                                                }`}>
+                                                {user?.role}
+                                            </span>
+                                            {canFreelance && (
+                                                <span className="px-2 py-1 text-xs rounded-full bg-green-400/20 text-green-400">
+                                                    Freelancer
+                                                </span>
+                                            )}
+                                        </div>
+                                    </motion.div>
+                                )}
+
                                 {/* CTA Buttons */}
                                 <motion.div
                                     className="pt-6 space-y-4"
@@ -405,22 +560,49 @@ const Navbar = ({ className }) => {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.4 }}
                                 >
-                                    <motion.button
-                                        className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-4 rounded-2xl font-semibold text-lg shadow-xl font-geist"
-                                        onClick={closeMobileMenu}
-                                        whileHover={{ scale: 1.02, boxShadow: "0 20px 40px rgba(59, 130, 246, 0.3)" }}
-                                        whileTap={{ scale: 0.98 }}
-                                    >
-                                        Get Started Today
-                                    </motion.button>
-                                    <motion.button
-                                        className="w-full border-2 border-white/20 text-white py-4 rounded-2xl font-semibold hover:bg-white/10 transition-colors font-geist"
-                                        onClick={closeMobileMenu}
-                                        whileHover={{ scale: 1.02, borderColor: "rgba(255, 255, 255, 0.4)" }}
-                                        whileTap={{ scale: 0.98 }}
-                                    >
-                                        Contact Sales
-                                    </motion.button>
+                                    {isAuthenticated ? (
+                                        <>
+                                            <motion.a
+                                                href="/dashboard"
+                                                className="block w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-4 rounded-2xl font-semibold text-lg shadow-xl font-geist text-center"
+                                                onClick={closeMobileMenu}
+                                                whileHover={{ scale: 1.02, boxShadow: "0 20px 40px rgba(59, 130, 246, 0.3)" }}
+                                                whileTap={{ scale: 0.98 }}
+                                            >
+                                                Go to Dashboard
+                                            </motion.a>
+                                            <motion.a
+                                                href="/products"
+                                                className="block w-full border-2 border-white/20 text-white py-4 rounded-2xl font-semibold hover:bg-white/10 transition-colors font-geist text-center"
+                                                onClick={closeMobileMenu}
+                                                whileHover={{ scale: 1.02, borderColor: "rgba(255, 255, 255, 0.4)" }}
+                                                whileTap={{ scale: 0.98 }}
+                                            >
+                                                Shop Displays
+                                            </motion.a>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <motion.a
+                                                href="/signup"
+                                                className="block w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-4 rounded-2xl font-semibold text-lg shadow-xl font-geist text-center"
+                                                onClick={closeMobileMenu}
+                                                whileHover={{ scale: 1.02, boxShadow: "0 20px 40px rgba(59, 130, 246, 0.3)" }}
+                                                whileTap={{ scale: 0.98 }}
+                                            >
+                                                Get Started Today
+                                            </motion.a>
+                                            <motion.a
+                                                href="/products"
+                                                className="block w-full border-2 border-white/20 text-white py-4 rounded-2xl font-semibold hover:bg-white/10 transition-colors font-geist text-center"
+                                                onClick={closeMobileMenu}
+                                                whileHover={{ scale: 1.02, borderColor: "rgba(255, 255, 255, 0.4)" }}
+                                                whileTap={{ scale: 0.98 }}
+                                            >
+                                                Browse Marketplace
+                                            </motion.a>
+                                        </>
+                                    )}
                                 </motion.div>
 
                                 {/* Bottom padding for scroll */}

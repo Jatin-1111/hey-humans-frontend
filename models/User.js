@@ -51,7 +51,13 @@ const userSchema = new mongoose.Schema({
             title: String,
             url: String,
             description: String,
-            thumbnail: String
+            thumbnail: String,
+            category: {
+                type: String,
+                enum: ['video-editing', 'motion-graphics', 'color-grading', 'audio-post', 'animation', 'other'],
+                default: 'video-editing'
+            },
+            createdAt: { type: Date, default: Date.now }
         }],
         hourlyRate: {
             type: Number,
@@ -87,7 +93,33 @@ const userSchema = new mongoose.Schema({
         profileCompleted: {
             type: Boolean,
             default: false
-        }
+        },
+        services: [{
+            name: String,
+            description: String,
+            price: Number,
+            deliveryTime: Number // in days
+        }],
+        certifications: [{
+            name: String,
+            issuer: String,
+            dateObtained: Date,
+            expiryDate: Date,
+            credentialUrl: String
+        }],
+        languages: [{
+            language: String,
+            proficiency: {
+                type: String,
+                enum: ['basic', 'conversational', 'fluent', 'native']
+            }
+        }]
+    },
+
+    // Profile picture
+    profilePicture: {
+        type: String,
+        default: ''
     },
 
     // Activity tracking

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { ImagesSlider } from "../ui/ImageSlider";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Play, Monitor, ShoppingCart } from "lucide-react";
 
 const HeroSection = () => {

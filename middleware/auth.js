@@ -1,4 +1,6 @@
 import jwt from 'jsonwebtoken';
+import { connectDB } from '@/lib/mongodb';
+import { User } from '@/models/User';
 
 export async function authenticate(req) {
     try {
@@ -16,9 +18,22 @@ export async function authenticate(req) {
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+        // Get fresh user data from database
+        await connectDB();
+        const user = await User.findById(decoded.userId).select('-password');
+
+        if (!user) {
+            return { success: false, error: 'User not found' };
+        }
+
+        if (!user.isVerified) {
+            return { success: false, error: 'Email not verified' };
+        }
+
         return {
             success: true,
-            user: decoded
+            user: user,
+            decoded: decoded
         };
 
     } catch (error) {
@@ -47,4 +62,44 @@ export async function requireAuth(req, allowedRoles = []) {
     }
 
     return authResult;
+}
+
+// Helper function to extract user from token (for API routes)
+export async function getUserFromRequest(req) {
+    const authResult = await authenticate(req);
+    if (!authResult.success) {
+        throw new Error(authResult.error);
+    }
+    return authResult.user;
+}
+
+// Helper function to generate JWT token
+export function generateToken(user) {
+    return jwt.sign(
+        {
+            userId: user._id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+            phone: user.phone,
+            address: user.address,
+            verified: user.isVerified,
+            profileCompletion: user.profileCompletion,
+            canFreelance: user.freelancerProfile?.isFreelancer || false,
+            freelancerProfile: user.freelancerProfile?.isFreelancer ? {
+                skills: user.freelancerProfile.skills,
+                hourlyRate: user.freelancerProfile.hourlyRate,
+                bio: user.freelancerProfile.bio,
+                rating: user.freelancerProfile.rating,
+                availability: user.freelancerProfile.availability,
+                profileCompleted: user.freelancerProfile.profileCompleted,
+                completedProjects: user.freelancerProfile.completedProjects
+            } : null,
+            activityStats: user.activityStats,
+            createdAt: user.createdAt,
+            lastLogin: user.lastLogin
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRY || '7d' }
+    );
 }

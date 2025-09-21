@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Play, ShoppingCart, Calendar, Star, Users, Clock, Zap, Shield, Award } from "lucide-react";
 
@@ -114,8 +114,29 @@ const FadeInDiv = ({ className, tabs, hovering }) => {
 
 // Content Components - Mobile Optimized
 const VideoEditingContent = () => (
-    <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 text-white w-full max-w-full overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center">
+    <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 text-white w-full max-w-full overflow-hidden relative">
+        {/* Coming Soon Overlay */}
+        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm rounded-2xl sm:rounded-3xl flex items-center justify-center z-10">
+            <div className="text-center">
+                <div className="mb-4">
+                    <span className="inline-block px-6 py-3 bg-gradient-to-r from-yellow-400 to-orange-400 text-black font-bold rounded-full text-lg font-geist">
+                        🚀 COMING SOON
+                    </span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 text-white font-space">
+                    Freelance Marketplace
+                </h3>
+                <p className="text-gray-300 text-sm sm:text-base lg:text-lg max-w-md mx-auto font-inter">
+                    Connect with professional video editors and creative specialists. We&apos;re building something amazing!
+                </p>
+                <button className="mt-6 px-6 py-3 border border-white/30 text-white rounded-full font-geist font-medium hover:bg-white/10 transition-colors">
+                    Notify Me When Live
+                </button>
+            </div>
+        </div>
+
+        {/* Background Content (Blurred) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center opacity-30">
             <div className="order-2 lg:order-1">
                 <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent font-space tracking-tight leading-tight">
                     Video Editing Services
@@ -136,14 +157,6 @@ const VideoEditingContent = () => (
                         <Clock className="text-green-400 w-4 h-4 sm:w-5 sm:h-5" />
                         <span className="font-inter font-medium text-sm sm:text-base">24-48 Hour Turnaround</span>
                     </div>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6 sm:mt-8">
-                    <button className="bg-white text-black px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-geist font-semibold hover:scale-105 transition-transform text-sm sm:text-base w-full sm:w-auto">
-                        Find Editors
-                    </button>
-                    <button className="border border-white/30 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full hover:bg-white/10 transition-colors font-geist font-medium text-sm sm:text-base w-full sm:w-auto">
-                        View Portfolio
-                    </button>
                 </div>
             </div>
             <div className="grid grid-cols-2 gap-3 sm:gap-4 order-1 lg:order-2">
@@ -173,7 +186,14 @@ const VideoEditingContent = () => (
 );
 
 const SellingContent = () => (
-    <div className="bg-gradient-to-br from-green-900 to-black rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 text-white w-full max-w-full overflow-hidden">
+    <div className="bg-gradient-to-br from-green-900 to-black rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 text-white w-full max-w-full overflow-hidden relative">
+        {/* Live Badge */}
+        <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-10">
+            <span className="inline-block px-4 py-2 bg-gradient-to-r from-green-400 to-emerald-400 text-black font-bold rounded-full text-sm font-geist animate-pulse">
+                🔴 LIVE NOW
+            </span>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center">
             <div className="order-2 lg:order-1">
                 <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent font-space tracking-tight leading-tight">
@@ -240,7 +260,14 @@ const SellingContent = () => (
 );
 
 const RentalContent = () => (
-    <div className="bg-gradient-to-br from-purple-900 to-black rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 text-white w-full max-w-full overflow-hidden">
+    <div className="bg-gradient-to-br from-purple-900 to-black rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 text-white w-full max-w-full overflow-hidden relative">
+        {/* Live Badge */}
+        <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-10">
+            <span className="inline-block px-4 py-2 bg-gradient-to-r from-green-400 to-emerald-400 text-black font-bold rounded-full text-sm font-geist animate-pulse">
+                🔴 LIVE NOW
+            </span>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center">
             <div className="order-2 lg:order-1">
                 <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-space tracking-tight leading-tight">
@@ -302,7 +329,7 @@ const RentalContent = () => (
 const MarketplaceTabsSection = () => {
     const tabs = [
         {
-            title: "Video Editing",
+            title: "Freelance Services",
             value: "editing",
             icon: <Play size={20} />,
             content: <VideoEditingContent />
